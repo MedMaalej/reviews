@@ -1,0 +1,26 @@
+
+<style type="text/css" media="screen">
+    #editor { 
+        position: absolute;
+        top: 220px;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 500px;
+    }
+</style>
+
+<body>
+ <link href="plugin_assets/reviews/bstrp/css/bootstrap.min.css" rel="stylesheet">
+ <link rel="stylesheet" href="plugin_assets/reviews/awesomplete/awesomplete.css" />
+ <script src="plugin_assets/reviews/awesomplete/awesomplete.js" async></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="plugin_assets/reviews/bstrp/js/bootstrap.min.js"></script>
+<form class="form-inline">
+    
+    <input class="awesomplete"
+       data-list=<%= @retNames %> />    
+    <input class="typeahead form-control" type="text" placeholder="Reviewer">
+    <button type="button" class="btn btn-info"> Send a review request </button>
+</form>
