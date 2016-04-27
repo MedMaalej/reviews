@@ -26,16 +26,29 @@ class ReviewsController < ApplicationController
         reviewerName = params["reviewerName"]
         
         url = Repository.where(project_id: proj).pluck("url")
-        n = url.length
-        str = url[0..n-5]
+        
+        puts url
+        if url != nil  
+           str = url.join('')
+           str =str[0..str.length-6]
+           #puts str
+           system "cd "+str + "&& git checkout -b "+projectName+"_code_review"
+        end   
         @projects = Project.all.pluck("name")  
         @reviews = Review.where(userId: User.current.id)
         uName = reviewerName.split("_")
         reviewer = User.where(firstname: uName[0],lastname: uName[1]).pluck("id")
         r  = Review.new
-        r.status = "request";
-        r.decision = "pending";
-        r.reviewerId = reviewer;               
+        r.status = "request"
+        r.decision = "pending"
+        r.reviewerId = reviewer[0]
+        puts reviewer      
+        r.userId = User.current.id
+        time1 = Time.new
+        r.dater = time1.inspect
+        r.comment = "No comments"
+        r.score = 1 
+        r.sprintId = 15 
         r.save
       end
   end
