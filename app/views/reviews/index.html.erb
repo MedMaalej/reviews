@@ -8,6 +8,10 @@
         left: 0;
         width: 500px;
     }
+    .requestForm {
+        margin-top: 500px;
+    }
+    
 </style>
 
 <body>
@@ -17,10 +21,62 @@
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="plugin_assets/reviews/bstrp/js/bootstrap.min.js"></script>
-<form class="form-inline">
-    
-    <input class="awesomplete"
+<div class="requestform">
+
+<center>
+<form class="form-inline" name="fReq">
+    <input type="hidden" name="req" id="req" value=0>    
+    <input class="awesomplete form-control" placeholder="reviewer" name="reviewerName" id="reviewerName"
        data-list=<%= @retNames %> />    
-    <input class="typeahead form-control" type="text" placeholder="Reviewer">
-    <button type="button" class="btn btn-info"> Send a review request </button>
+    <select class="form-control" id="projectName" name="projectName">
+         <%
+            @projects.each do |proj|
+         %>
+         <option>    
+            <%= proj %>
+         </option>
+         <%
+            end
+         %>
+       
+    </select>
+    <button type="button" class="btn btn-info" onclick="sendRequest()"> Send a review request </button>
 </form>
+<br><br>
+<% if @requestOn == true %>
+<div class="table-responsive">
+  <table class="table">
+  <th> Comment </th>
+  <th> Score </th> 
+  <th> Sprint </th>
+  <th> Decision </th>
+  <th> Status </th>
+  <th> Review date </th>
+  <th> Reviewer ID </th>
+  <% 
+    @reviews.each do |review|
+  %>
+    <tr> 
+        <td> <%= review["comment"]  %> </td>
+        <td> <%= review["score"]  %> </td>
+        <td> <%= review["sprintId"]  %> </td>
+        <td> <%= review["decision"]  %> </td> 
+        <td> <%= review["status"]  %> </td>
+        <td> <%= review["dater"]  %> </td>
+        <td> <%= review["reviewerId"]  %> </td>
+    </tr>
+  <%       
+    end
+  %>    
+  </table>
+<%end%>
+</div>
+</center>
+</div>
+<script type="text/javascript">
+
+   function sendRequest() {
+      document.getElementById("req").value = 1;
+      document.forms["fReq"].submit();      
+   }
+</script>

@@ -2,8 +2,6 @@ class CreateReviews < ActiveRecord::Migration
   def change
     create_table :reviews do |t|
 
-      t.integer :id
-
       t.string :comment
 
       t.integer :score
@@ -11,12 +9,14 @@ class CreateReviews < ActiveRecord::Migration
       t.integer :sprintId
 
       t.string :decision
+      
+      t.string :status
 
       t.string :dater
 
       t.integer :userId
-
-
+      
+      t.integer :reviewerId
     end
 
   end
