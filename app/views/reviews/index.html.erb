@@ -13,7 +13,6 @@
     }
     
 </style>
-
 <body>
  <link href="plugin_assets/reviews/bstrp/css/bootstrap.min.css" rel="stylesheet">
  <link rel="stylesheet" href="plugin_assets/reviews/awesomplete/awesomplete.css" />
@@ -25,51 +24,15 @@
 
 <center>
 <form class="form-inline" name="fReq">
-    <input type="hidden" name="req" id="req" value=0>    
-    <input class="awesomplete form-control" placeholder="reviewer" name="reviewerName" id="reviewerName"
-       data-list=<%= @retNames %> />    
-    <select class="form-control" id="projectName" name="projectName">
-         <%
-            @projects.each do |proj|
-         %>
-         <option>    
-            <%= proj %>
-         </option>
-         <%
-            end
-         %>
-       
-    </select>
+    <input type="hidden" name="req" id="req" value=0>       
+    <input type="hidden" name="projectName" id="projectName" value =<%= @projName %> >
     <button type="button" class="btn btn-info" onclick="sendRequest()"> Send a review request </button>
 </form>
+<%
+   puts @repo
+   #txt = File.open(@repo,"r")
+ %>
 <br><br>
-<% if @requestOn == true %>
-<div class="table-responsive">
-  <table class="table">
-  <th> Comment </th>
-  <th> Score </th> 
-  <th> Sprint </th>
-  <th> Decision </th>
-  <th> Status </th>
-  <th> Review date </th>
-  <th> Reviewer ID </th>
-  <% 
-    @reviews.each do |review|
-  %>
-    <tr> 
-        <td> <%= review["comment"]  %> </td>
-        <td> <%= review["score"]  %> </td>
-        <td> <%= review["sprintId"]  %> </td>
-        <td> <%= review["decision"]  %> </td> 
-        <td> <%= review["status"]  %> </td>
-        <td> <%= review["dater"]  %> </td>
-        <td> <%= review["reviewerId"]  %> </td>
-    </tr>
-  <%       
-    end
-  %>    
-  </table>
-<%end%>
 </div>
 </center>
 </div>
