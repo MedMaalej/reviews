@@ -29,10 +29,15 @@
     <button type="button"  class ="btn btn-info" id="sendReq"  onclick="sendRequest()"> Send a review request </button>
 </form>
 <%
+if @req == 1
    puts @repo
-   puts "here"
-   #fileName = @repo+"/branches.txt"
-   #txt = File.open(fileName,"r")
+   filePath = @repo +  "/branches.txt"
+   File.open(filePath, "r") do |f|
+      f.each_line do |line|
+         puts line
+      end
+   end
+end
  %>
 <br><br>
 </div>
