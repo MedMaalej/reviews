@@ -26,11 +26,13 @@
 <form class="form-inline" name="fReq">
     <input type="hidden" name="req" id="req" value=0>       
     <input type="hidden" name="projectName" id="projectName" value =<%= @projName %> >
-    <button type="button" class="btn btn-info" onclick="sendRequest()"> Send a review request </button>
+    <button type="button"  class ="btn btn-info" id="sendReq"  onclick="sendRequest()"> Send a review request </button>
 </form>
 <%
    puts @repo
-   #txt = File.open(@repo,"r")
+   puts "here"
+   #fileName = @repo+"/branches.txt"
+   #txt = File.open(fileName,"r")
  %>
 <br><br>
 </div>
@@ -38,8 +40,10 @@
 </div>
 <script type="text/javascript">
 
+ 
    function sendRequest() {
       document.getElementById("req").value = 1;
+      document.getElementById("sendReq").disabled = true;
       document.forms["fReq"].submit();      
    }
 </script>
