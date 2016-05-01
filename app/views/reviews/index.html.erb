@@ -23,32 +23,29 @@
 <div class="requestform">
 
 <center>
-<form class="form-inline" name="fReq">
+<form  name="fReq" role="form" action="availableBranches">
     <input type="hidden" name="req" id="req" value=0>       
     <input type="hidden" name="projectName" id="projectName" value =<%= @projName %> >
-    <button type="button"  class ="btn btn-info" id="sendReq"  onclick="sendRequest()"> Send a review request </button>
+<br> <br>
+<br> <br>
+
+<center><button type="button"  class ="btn btn-info" id="sendReq"  onclick="sendRequest()"> Send a review request </button></center>
+
 </form>
-<%
-if @req == 1
-   puts @repo
-   filePath = @repo +  "/branches.txt"
-   File.open(filePath, "r") do |f|
-      f.each_line do |line|
-         puts line
-      end
-   end
-end
- %>
 <br><br>
 </div>
-</center>
+
 </div>
 <script type="text/javascript">
 
- 
+   function initComponents () {
+   }
+   function chooseReviewer () {
+      alert (document.getElementById("branch").value);
+      
+   } 
    function sendRequest() {
       document.getElementById("req").value = 1;
-      document.getElementById("sendReq").disabled = true;
       document.forms["fReq"].submit();      
    }
 </script>

@@ -7,8 +7,8 @@ class CreatePatches < ActiveRecord::Migration
       t.text :pOldText
 
       t.text :pNewText
-
-
+     
+      t.integer :pLine
     end
 
   end
