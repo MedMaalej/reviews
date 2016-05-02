@@ -69,7 +69,7 @@ class ReviewsController < ApplicationController
      url = Repository.where(project_id: proj).pluck("url")
      str = url.join('')
      str =str[0..str.length-6]
-     r.branchName =str
+     r.branchName =str+";branch:"+params["branch"]
      r.projectId = proj[0]
      r.save
 
