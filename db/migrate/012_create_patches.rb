@@ -1,6 +1,9 @@
 class CreatePatches < ActiveRecord::Migration
   def change
     create_table :patches do |t|
+      t.integer :reviewId
+
+      t.integer :issueId
 
       t.string :ptime
 

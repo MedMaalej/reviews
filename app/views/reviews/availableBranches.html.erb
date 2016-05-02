@@ -1,5 +1,81 @@
 <html>
 <body>
-    <%= params['projectName'] %>
+<style>
+
+</style>
+<link href="plugin_assets/reviews/bstrp/css/bootstrap.min.css" rel="stylesheet">
+ <link rel="stylesheet" href="plugin_assets/reviews/awesomplete/awesomplete.css" />
+ <script src="plugin_assets/reviews/awesomplete/awesomplete.js" async></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+ <!-- Include all compiled plugins (below), or include individual files as needed -->
+ <script src="plugin_assets/reviews/bstrp/js/bootstrap.min.js"></script>
+    
+<table border="0">
+<form role="form" name="fReviewerSelection" class="center-block" action="requestConfirmed">
+  <tr><td>
+  <h4> Select a branch for review </h4> 
+  <div class="col-lg-3 text-center" >
+  </td>
+  <td>
+  <select name="branch" id="branch" class="form-control">
+<%
+   puts @repo
+   filePath = @repo +  "/branches.txt"
+   i = 0
+   
+   File.open(filePath, "r") do |f|
+      f.each_line do |line| %>
+
+         <option> <%= line %> </option>
+
+
+       <%
+       i = i + 1
+      end
+   end
+
+ %>
+
+</select>
+</td>
+
+</div>
+</tr>
+<tr>
+<td>
+<div class="col-lg-3">
+<h4> Select a reviewer  </h4><br>
+</td>
+<td>
+
+<select name="reviewer" id="reviewer" class="form-control" >
+    <% @allUsers.each do |user| %>
+
+         <option> <%= user['firstname'] + " "+user['lastname'] %> </option>
+
+
+    <%
+ 
+      end
+    %>
+</select>
+</div>
+</td>
+</tr>
+<br> <br>
+<tr><td colspan="2">
+<input type="hidden" name="projectName" id="projectName" value=<%= @projName %> >
+<button type="button" class="btn btn-info" onclick="confirmRequest()"> Confirm your review request </button>
+</td><td></td></tr>
+</form>
+</table>
+
 </body>
 </html>
+	
+<script type="text/javascript">
+
+function confirmRequest() {
+   document.forms["fReviewerSelection"].submit();
+}
+</script>

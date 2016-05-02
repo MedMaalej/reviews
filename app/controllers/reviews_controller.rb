@@ -28,7 +28,9 @@ class ReviewsController < ApplicationController
            system "cd "+str + "&& git pull origin master "
            system "cd "+str + "&& git branch > branches.txt "
            @repo = str
-           render "availableBranches"
+           @allUsers = User.all     
+           
+           
         end
 
     end
@@ -39,5 +41,27 @@ class ReviewsController < ApplicationController
         
        
   end
-  
+  def requestConfirmed () 
+     uName = params["reviewer"].split(" ")
+     #retrieving project's id
+     @projName = params['projectName']
+     reviewer = User.where(firstname: uName[0],lastname: uName[1]).pluck("id")
+     r  = Review.new
+     r.status = "request";
+     r.decision = "pending";
+     r.reviewerId = reviewer;
+     r.status = "request"
+     r.decision = "pending"
+     r.reviewerId = reviewer[0]
+     r.userId = User.current.id
+     time1 = Time.new
+     r.dater = time1.inspect
+     r.comment = "No comments"
+     r.score = 1
+     r.sprintId = 15
+     proj  = Project.where(name: @projName).pluck("id")
+     r.projectId = proj[0]
+     r.save
+
+  end  
 end
