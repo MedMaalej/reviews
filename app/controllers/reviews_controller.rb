@@ -2,7 +2,13 @@ class ReviewsController < ApplicationController
   unloadable
 
 
-  
+  def isMember(userId,projectId)
+     found = Member.where(user_id: userId,project_id: projectId)
+     if found == nil
+        return false
+     end   
+     return true
+  end  
   def index
      req = params['req'].blank? ? '' : params['req']
      @projName = params['project_id']
@@ -60,6 +66,10 @@ class ReviewsController < ApplicationController
      r.score = 1
      r.sprintId = 15
      proj  = Project.where(name: @projName).pluck("id")
+     url = Repository.where(project_id: proj).pluck("url")
+     str = url.join('')
+     str =str[0..str.length-6]
+     r.branchName =str
      r.projectId = proj[0]
      r.save
 

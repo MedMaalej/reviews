@@ -3,6 +3,8 @@ class CreateReviews < ActiveRecord::Migration
     create_table :reviews do |t|
 
       t.integer :projectId 
+      
+      t.string :branchName
        
       t.string :comment
 
