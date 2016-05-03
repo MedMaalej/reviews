@@ -50,9 +50,9 @@
 
 <select name="reviewer" id="reviewer" class="form-control" >
     <% @allUsers.each do |user| %>
-
-         <option> <%= user['firstname'] + " "+user['lastname'] %> </option>
-
+         <% if !user['lastname'].eql? 'Anonymous' %>
+            <option> <%= user['firstname'] + " "+user['lastname'] %> </option>
+         <% end %>
 
     <%
  

@@ -1,4 +1,3 @@
-
 class ReviewsController < ApplicationController
   unloadable
 
@@ -14,9 +13,7 @@ class ReviewsController < ApplicationController
      req = params['req'].blank? ? '' : params['req']
      @projName = params['project_id']
      proj = Project.where(name: @projName).pluck("id")
-     @reviews = Review.where(userId: User.current.id , projectId: proj)
-             
-     
+     @reviews = Review.where(userId: User.current.id , projectId: proj)                  
   end
   def availableBranches
      req = params['req'].blank? ? '' : params['req']
