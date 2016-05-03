@@ -1,3 +1,4 @@
+
 class ReviewsController < ApplicationController
   unloadable
 
@@ -12,7 +13,9 @@ class ReviewsController < ApplicationController
   def index
      req = params['req'].blank? ? '' : params['req']
      @projName = params['project_id']
-        
+     proj = Project.where(name: @projName).pluck("id")
+     @reviews = Review.where(userId: User.current.id , projectId: proj)
+             
      
   end
   def availableBranches
@@ -34,7 +37,18 @@ class ReviewsController < ApplicationController
            system "cd "+str + "&& git pull origin master "
            system "cd "+str + "&& git branch > branches.txt "
            @repo = str
-           @allUsers = User.all     
+           users = []
+           i =0
+           allU = User.all
+           allU.each do  |user|
+              if isMember(user.id, proj[0])
+                 users [i] = user
+                 i = i + 1
+              end
+           end
+           @allUsers = allU
+           
+           
            
            
         end
@@ -72,6 +86,6 @@ class ReviewsController < ApplicationController
      r.branchName =str+";branch:"+params["branch"]
      r.projectId = proj[0]
      r.save
-
+     
   end  
 end

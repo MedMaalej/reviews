@@ -33,6 +33,35 @@
 
 </form>
 <br><br>
+<center><h2>All your previous requests</h2></center>
+<br><br>
+<table class="table">
+  <th> Project  </th>
+  <th> Branch  </th>
+  <th> Reviewer </th>
+  <th> Score </th>
+  <th> Decision </th>
+  <th> Comment </th>
+  <%
+  @reviews.each do |review|
+  %>
+     <tr> 
+        <td> <%= (Project.where(id: review['projectId']).pluck("name"))[0] %> </td> 
+        <td>  <%= review['branchName'] %> </td>
+        <td> <%= User.where(id: review['reviewerId']).pluck("firstname")[0]%>&nbsp <%= User.where(id: review['reviewerId']).pluck("lastname")[0] %> </td>
+        <td>  <%= review['score'] %> </td>
+        <td> <%= review['decision'] %> </td>
+        <td>  <%= review['comment'] %> </td>
+ 
+     </tr>
+     
+  <%  
+  end
+
+
+
+   %>   
+</table>
 </div>
 
 </div>
