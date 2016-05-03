@@ -3,3 +3,4 @@
 get 'reviews', :to => 'reviews#index'
 get 'availableBranches', :to => 'reviews#availableBranches'
 get 'requestConfirmed' , :to => 'reviews#requestConfirmed'
+get 'receiveRequests' , :to => 'reviews#receiveRequests'

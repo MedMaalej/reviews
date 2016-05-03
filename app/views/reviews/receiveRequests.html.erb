@@ -1,0 +1,43 @@
+<body>
+<link href="plugin_assets/reviews/bstrp/css/bootstrap.min.css" rel="stylesheet">
+ <link rel="stylesheet" href="plugin_assets/reviews/awesomplete/awesomplete.css" />
+ <script src="plugin_assets/reviews/awesomplete/awesomplete.js" async></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+ <!-- Include all compiled plugins (below), or include individual files as needed -->
+ <script src="plugin_assets/reviews/bstrp/js/bootstrap.min.js"></script>
+<br>
+<h3> Incoming review requests </h3> <br> <br>
+<table class="table">
+<th> Developer  </th>
+<th> Branch </th>
+<th> Project</th>
+<th> Accept/Reject review request </th>
+<%
+@incomingRequests.each do |request|
+%>
+   <tr><td> <%= User.where(id: request['userId']).pluck('firstname')[0] %> &nbsp
+   <%= User.where(id: request['userId']).pluck('lastname')[0] %> </td>
+   <td> <%= request['branchName']  %></td>
+   <td> <%= Project.where(id: request['projectId']).pluck('name') [0]   %> </td>
+   <td>
+     <form role="form" name="fAcceptRefuseReq">        
+        <button class="btn btn-success" name="btn-accept" id="btn-accept" onclick="acceptReview()">Accept request</button> 
+        <input type="hidden" value=0 id="rAccept" name="rAccept">
+        <input type="hidden" value=<%= request['id']  %> id="currentReview" name="currentReview">
+        <button class="btn btn-danger" name="btn-reject" id="btn-reject">Reject request</button>  
+        <button class="btn btn-primary" name="btn-postpone" id="btn-postpone">Postpone review</button>
+     </form>
+      
+   </td>
+   </tr>
+<%
+end
+%>
+</table>
+</body>
+<script type="text/javascript">
+   function acceptReview() {
+      document.getElementById("rAccept").value = 1;
+      document.forms["fAcceptRefuseReq"].submit();
+   }
+</script>

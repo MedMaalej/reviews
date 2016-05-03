@@ -85,4 +85,12 @@ class ReviewsController < ApplicationController
      r.save
      
   end  
+  def receiveRequests()
+     @incomingRequests = Review.where(reviewerId: User.current.id , status: 'request')
+     acc = params['rAccept']
+     if acc.eql?  '1' 
+         r = Review.find_by(id: params['currentReview'])
+         r.update(status: 'accepted')
+     end    
+  end
 end

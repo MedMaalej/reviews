@@ -22,18 +22,7 @@
     <script src="plugin_assets/reviews/bstrp/js/bootstrap.min.js"></script>
 <div class="requestform">
 
-<center>
-<form  name="fReq" role="form" action="availableBranches">
-    <input type="hidden" name="req" id="req" value=0>       
-    <input type="hidden" name="projectName" id="projectName" value =<%= @projName %> >
-<br> <br>
-<br> <br>
-
-<center><button type="button"  class ="btn btn-info" id="sendReq"  onclick="sendRequest()"> Send a review request </button></center>
-
-</form>
-<br><br>
-<center><h2>All your previous requests</h2></center>
+<h2>All your previous requests</h2></center>
 <br><br>
 <table class="table">
   
@@ -62,6 +51,17 @@
 
    %>   
 </table>
+<form  name="fReq" role="form" action="availableBranches">
+    <input type="hidden" name="req" id="req" value=0>
+    <input type="hidden" name="projectName" id="projectName" value =<%= @projName %> >
+<br> <br>
+<br> <br>
+
+<center><button type="button"  class ="btn btn-info" id="sendReq"  onclick="sendRequest()"> Send a review request </button></center>
+
+</form>
+<br><br>
+<center>
 </div>
 
 </div>
