@@ -6,7 +6,7 @@
  <!-- Include all compiled plugins (below), or include individual files as needed -->
  <script src="plugin_assets/reviews/bstrp/js/bootstrap.min.js"></script>
 <br>
-<h3> Incoming review requests </h3> <br> <br>
+<h3> Incoming review requests </h3> <b><span class="label label-default"><%= @incomingRequests.size %> pending  requests</span></b> <br> <br>
 <table class="table">
 <th> Developer  </th>
 <th> Branch </th>
@@ -34,10 +34,43 @@
 end
 %>
 </table>
+
+<h3> Accepted review requests </h3> <br> <br>
+<table class="table">
+<th> Developer  </th>
+<th> Branch </th>
+<th> Project</th>
+<th> Start code review </th>
+<%
+@acceptedIncomingRequests.each do |request|
+%>
+   <tr><td> <%= User.where(id: request['userId']).pluck('firstname')[0] %> &nbsp
+   <%= User.where(id: request['userId']).pluck('lastname')[0] %> </td>
+   <td> <%= request['branchName']  %></td>
+   <td> <%= Project.where(id: request['projectId']).pluck('name') [0]   %> </td>
+   <td>
+     <form role="form" name="fCodeReview">
+        <button class="btn btn-info" name="btn-rev" id="btn-rev" onclick="startReview()">Start review</button>
+        <input type="hidden" value=0 id="rStart" name="rStart">        
+        <input type="hidden" value=<%= @projName  %> id="projectName" name="projectName">
+     </form>
+
+   </td>
+   </tr>
+<%
+end
+%>
+</table>
+
 </body>
 <script type="text/javascript">
    function acceptReview() {
       document.getElementById("rAccept").value = 1;
       document.forms["fAcceptRefuseReq"].submit();
    }
+   function startReview() {
+      document.getElementById("rStart").value = 1;
+      document.forms["fAcceptRefuseReq"].submit();
+   }
+
 </script>

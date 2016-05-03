@@ -29,7 +29,7 @@
   <th> Branch  </th>
   <th> Reviewer </th>
   <th> Score </th>
-  <th> Decision </th>
+  <th> Status </th>
   <th> Comment </th>
   <%
   @reviews.each do |review|
@@ -39,7 +39,7 @@
         <td>  <%= review['branchName'] %> </td>
         <td> <%= User.where(id: review['reviewerId']).pluck("firstname")[0]%>&nbsp <%= User.where(id: review['reviewerId']).pluck("lastname")[0] %> </td>
         <td>  <%= review['score'] %> </td>
-        <td> <%= review['decision'] %> </td>
+        <td> <%= review['status'] %> </td>
         <td>  <%= review['comment'] %> </td>
  
      </tr>

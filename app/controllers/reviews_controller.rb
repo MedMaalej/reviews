@@ -87,10 +87,27 @@ class ReviewsController < ApplicationController
   end  
   def receiveRequests()
      @incomingRequests = Review.where(reviewerId: User.current.id , status: 'request')
+     @acceptedIncomingRequests = Review.where(reviewerId: User.current.id , status: 'accepted')
      acc = params['rAccept']
+     start = params['rStart']
      if acc.eql?  '1' 
-         r = Review.find_by(id: params['currentReview'])
-         r.update(status: 'accepted')
+        r = Review.find_by(id: params['currentReview'])
+        r.update(status: 'accepted')
      end    
+      @projName = params['project_id']
+     if start.eql? '1'
+        @projName = params['projectName']  
+        proj = Project.where(name: @projName).pluck("id")
+        url = Repository.where(project_id: proj).pluck("url")
+
+        if url != nil
+           str = url.join('')
+           str =str[0..str.length-6]
+           puts str
+           proj = params['projectName']
+           system "cd "+str + "&& git pull origin master"
+           system "cd "+str + "&& git checkout -b "+ proj +"_review_2"
+        end 
+     end
   end
 end
