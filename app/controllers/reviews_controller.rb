@@ -106,7 +106,8 @@ class ReviewsController < ApplicationController
            puts str
            proj = params['projectName']
            system "cd "+str + "&& git pull origin master"
-           system "cd "+str + "&& git checkout -b "+ proj +"_review_2"
+           system "cd "+str + "&& git checkout -b "+ proj +"_review_21"
+         
         end 
      end
   end
