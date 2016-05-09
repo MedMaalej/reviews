@@ -45,6 +45,7 @@ end
 <th> Branch </th>
 <th> Project</th>
 <th> Start code review </th>
+<form role="form" name="fCodeReview" action="startReview">
 <%
 @acceptedIncomingRequests.each do |request|
 %>
@@ -53,19 +54,18 @@ end
    <td> <%= request['branchName']  %></td>
    <td> <%= Project.where(id: request['projectId']).pluck('name') [0]   %> </td>
    <td>
-     <form role="form" name="fCodeReview">
         <button class="btn btn-info" name="btn-rev" id="btn-rev" onclick="startReview()">Start review</button>
-        <input type="hidden" value=0 id="rStart" name="rStart">        
-        <input type="hidden" value=<%= @projName  %> id="projectName" name="projectName">
-     </form>
+        <input type="hidden" value=<%= Project.where(id: request['projectId']).pluck('name') [0] %> id="projectName" name="projectName">
+     
 
    </td>
    </tr>
 <%
 end
 %>
-
-
+<input type="hidden" value=0 id="rStart" name="rStart">
+<input type="hidden" value=<%= @projName %> id="project_id" name="project_id">
+</form>
 </table>
 
 </body>

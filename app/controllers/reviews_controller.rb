@@ -89,19 +89,20 @@ class ReviewsController < ApplicationController
      @incomingRequests = Review.where(reviewerId: User.current.id , status: 'request')
      @acceptedIncomingRequests = Review.where(reviewerId: User.current.id , status: 'accepted')
      acc = params['rAccept']
-     start = params['rStart']
      if acc.eql?  '1' 
         r = Review.find_by(id: params['currentReview'])
         r.update(status: 'accepted')       
         @accepted = 1
-        redirect_to :receiveRequests
-     end    
-      @projName = params['project_id']
+        #redirect_to :receiveRequests
+     end
+  end
+  def startReview()     
+     @projName = params['project_id']
+     start = params['rStart']
      if start.eql? '1'
         @projName = params['projectName']  
         proj = Project.where(name: @projName).pluck("id")
         url = Repository.where(project_id: proj).pluck("url")
-
         if url != nil
            str = url.join('')
            str =str[0..str.length-6]
@@ -113,4 +114,5 @@ class ReviewsController < ApplicationController
         end 
      end
   end
+  
 end
