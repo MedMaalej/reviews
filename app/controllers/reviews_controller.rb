@@ -92,7 +92,9 @@ class ReviewsController < ApplicationController
      start = params['rStart']
      if acc.eql?  '1' 
         r = Review.find_by(id: params['currentReview'])
-        r.update(status: 'accepted')
+        r.update(status: 'accepted')       
+        @accepted = 1
+        redirect_to :receiveRequests
      end    
       @projName = params['project_id']
      if start.eql? '1'
@@ -106,7 +108,7 @@ class ReviewsController < ApplicationController
            puts str
            proj = params['projectName']
            system "cd "+str + "&& git pull origin master"
-           system "cd "+str + "&& git checkout -b "+ proj +"_review_21"
+           system "cd "+str + "&& git checkout -b "+ proj +"_review_212"
          
         end 
      end

@@ -12,27 +12,31 @@
 <th> Branch </th>
 <th> Project</th>
 <th> Accept/Reject review request </th>
+<form role="form" name="fAcceptRefuseReq" action="receiveRequests">
 <%
+i = 0
 @incomingRequests.each do |request|
 %>
    <tr><td> <%= User.where(id: request['userId']).pluck('firstname')[0] %> &nbsp
    <%= User.where(id: request['userId']).pluck('lastname')[0] %> </td>
    <td> <%= request['branchName']  %></td>
    <td> <%= Project.where(id: request['projectId']).pluck('name') [0]   %> </td>
-   <td>
-     <form role="form" name="fAcceptRefuseReq">        
-        <button class="btn btn-success" name="btn-accept" id="btn-accept" onclick="acceptReview()">Accept request</button> 
-        <input type="hidden" value=0 id="rAccept" name="rAccept">
-        <input type="hidden" value=<%= request['id']  %> id="currentReview" name="currentReview">
+   <td>     
+        <button class="btn btn-success"  id=<%= i %>   onclick="acceptReview()">Accept request</button> 
+        <input type="hidden" value=<%= request['id']  %>" id="currentReview" name="currentReview">
         <button class="btn btn-danger" name="btn-reject" id="btn-reject">Reject request</button>  
         <button class="btn btn-primary" name="btn-postpone" id="btn-postpone">Postpone review</button>
-     </form>
+     
       
    </td>
    </tr>
 <%
+
+i = i + 1
 end
 %>
+<input type="hidden" name="rAccept" id="rAccept">
+</form>
 </table>
 
 <h3> Accepted review requests </h3> <br> <br>
@@ -60,17 +64,18 @@ end
 <%
 end
 %>
+
+
 </table>
 
 </body>
 <script type="text/javascript">
-   function acceptReview() {
+   
+   function acceptReview() {   
       document.getElementById("rAccept").value = 1;
-      document.forms["fAcceptRefuseReq"].submit();
    }
    function startReview() {
       document.getElementById("rStart").value = 1;
-      document.forms["fAcceptRefuseReq"].submit();
    }
-
+  
 </script>
