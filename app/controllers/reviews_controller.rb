@@ -117,7 +117,12 @@ class ReviewsController < ApplicationController
      end
   end
   def doCommentLine
-     puts "hello"      
+     patch = Patch.new
+     patch.pComment = params['comment']
+     patch.pLine = params['lineNbr']
+     patch.pErrorId = Error.where(errorName: params['errors']).pluck('id')[0]
+     patch.save     
+     redirect_to :back
   end
   
 end

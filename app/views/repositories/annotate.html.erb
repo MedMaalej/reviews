@@ -56,23 +56,25 @@
 <% end %>
 <form role="form" name="fComment" action=<%= base_url +"/doCommentLine"%>>
    <div class="col-lg-2">
-   Line : <input type="text" class="form-control" id="lineNumber">
+   Line : <input type="text" class="form-control" name="lineNumber"  id="lineNumber">
    <br>
-   Comment :<textarea id="comment" class="form-control" > </textarea>
+   Comment :<textarea id="comment" name="comment" class="form-control" > </textarea>
    <br>
    Error category :
-   <select name="errors" class="form-control" id="error">
+   <select name="errors" class="form-control" id="errors">
       <option> Exception handling  </option>
       <option> Stack overflow </option>
    </select>
    <br>
-   <button class="btn btn-info" id="btn-comment">Save</button>
+   <button class="btn btn-info" id="btn-comment" type="submit" >Save</button>
   </div>
+ <input class="form-control" type="hidden" name="lineNbr" id="lineNbr">
 </form>
 </body>
 <script type="text/javascript">
     function commentLine(x) {
        document.getElementById("lineNumber").value= x;       
+       document.getElementById("lineNbr").value= x;
     }
     function initComponents() {
        document.getElementById("lineNumber").disabled = true;
