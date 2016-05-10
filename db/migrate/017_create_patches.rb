@@ -7,11 +7,12 @@ class CreatePatches < ActiveRecord::Migration
 
       t.string :ptime
 
-      t.text :pOldText
-
-      t.text :pNewText
+      t.text :pComment
      
       t.integer :pLine
+      
+      t.integer :pErrorId
+     
     end
 
   end

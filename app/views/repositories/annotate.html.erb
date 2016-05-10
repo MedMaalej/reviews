@@ -1,9 +1,11 @@
-<body onload="initComponents()"> <link href="http://192.168.1.126:3000/plugin_assets/reviews/bstrp/css/bootstrap.min.css" rel="stylesheet">
- <link rel="stylesheet" href="http://192.168.1.126:3000/plugin_assets/reviews/awesomplete/awesomplete.css" />
- <script src="http://192.168.1.126:3000/plugin_assets/reviews/awesomplete/awesomplete.js" async></script>
+
+<% base_url = "http://192.168.1.126:3000"%>
+<body onload="initComponents()"> <link href=<%= base_url +"/plugin_assets/reviews/bstrp/css/bootstrap.min.css"%> rel="stylesheet">
+ <link rel="stylesheet" href=<%= base_url+ "http://192.168.1.126:3000/plugin_assets/reviews/awesomplete/awesomplete.css" %> />
+ <script src=<%= base_url+"/plugin_assets/reviews/awesomplete/awesomplete.js" %> async></script>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
  <!-- Include all compiled plugins (below), or include individual files as needed -->
- <script src="http://192.168.1.126:3000/plugin_assets/reviews/bstrp/js/bootstrap.min.js"></script>
+ <script src=<%=base_url+ "/plugin_assets/reviews/bstrp/js/bootstrap.min.js" %>></script>
 
 <%= call_hook(:view_repositories_show_contextual, { :repository => @repository, :project => @project }) %>
 
@@ -52,15 +54,16 @@
 <% content_for :header_tags do %>
 <%= stylesheet_link_tag 'scm' %>
 <% end %>
-<form role="form" name="fComment">
-  <div class="col-lg-2">
+<form role="form" name="fComment" action=<%= base_url +"/doCommentLine"%>>
+   <div class="col-lg-2">
    Line : <input type="text" class="form-control" id="lineNumber">
    <br>
    Comment :<textarea id="comment" class="form-control" > </textarea>
    <br>
-   Error category :<select class="form-control" id="errorType">
-       <option> Gestion des exceptions </option>
-       <option> Gestion de la memoire </option>
+   Error category :
+   <select name="errors" class="form-control" id="error">
+      <option> Exception handling  </option>
+      <option> Stack overflow </option>
    </select>
    <br>
    <button class="btn btn-info" id="btn-comment">Save</button>
