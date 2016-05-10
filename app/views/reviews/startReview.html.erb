@@ -5,6 +5,28 @@
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
  <!-- Include all compiled plugins (below), or include individual files as needed -->
  <script src="plugin_assets/reviews/bstrp/js/bootstrap.min.js"></script>
+ <table class="table">
+ <form role="form" name="reviewForm" id="reviewForm">
+    <tr> <td>
+    <div class="col-lg-5 text-center" >
+    <textArea class="form-control" name="comment" id="comment"></textarea>
+    </td>
+    </div> 
+    </tr>
+    <tr>
+     <td>
+    <div class="col-lg-3 text-center" >
 
- Starting the review ...
+    <select  name="selectErrorType" id="selectErrorType" class="form-control">
+         <option> Exceptions handling </option>
+         <option> Variable scope </option>
+    </select>
+   
+    <button class="btn btn-info" name="btn_save" id="btn_save">Save comment</button>
+    </div>
+    </td>
+    </tr>
+
+ </form>
+ </table>
 </body>
