@@ -96,7 +96,7 @@ class ReviewsController < ApplicationController
         #redirect_to :receiveRequests
      end
   end
-  def startReview()     
+  def annotate()     
      @projName = params['project_id']
      start = params['rStart']
      if start.eql? '1'
@@ -110,7 +110,7 @@ class ReviewsController < ApplicationController
            proj = params['projectName']
            system "cd "+str + "&& git pull origin master"
            system "cd "+str + "&& git checkout -b "+ proj +"_review_212"
-         
+           redirect_to '/projects/' +@projName+'/repository'        
         end 
      end
   end

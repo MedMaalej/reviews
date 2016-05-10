@@ -1,5 +1,4 @@
-<body>
-<link href="http://192.168.1.126:3000/plugin_assets/reviews/bstrp/css/bootstrap.min.css" rel="stylesheet">
+<body onload="initComponents()"> <link href="http://192.168.1.126:3000/plugin_assets/reviews/bstrp/css/bootstrap.min.css" rel="stylesheet">
  <link rel="stylesheet" href="http://192.168.1.126:3000/plugin_assets/reviews/awesomplete/awesomplete.css" />
  <script src="http://192.168.1.126:3000/plugin_assets/reviews/awesomplete/awesomplete.js" async></script>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -24,8 +23,10 @@
     <% line_num = 1; previous_revision = nil %>
     <% syntax_highlight_lines(@path, Redmine::CodesetUtil.to_utf8_by_setting(@annotate.content)).each do |line| %>
       <% revision = @annotate.revisions[line_num - 1] %>
-      <tr id="L<%= line_num %>" class="bloc-<%= revision.nil? ? 0 : colors[revision.identifier || revision.revision] %>">
-        <th class="line-num"><a href="#L<%= line_num %>" onclick="comment()"><%= line_num %></a></th>
+      <tr  id="L<%= line_num %>" class="bloc-<%= revision.nil? ? 0 : colors[revision.identifier || revision.revision] %>">
+        <input type="hidden" value=<%= line_num  %> id="line">
+        <th class="line-num"><a href="#L<%= line_num %>"  onclick="commentLine(<%= line_num %>)"><%= line_num %></a></th>
+        
         <td class="revision">
           <% if revision && revision != previous_revision %>
             <%= revision.identifier ?
@@ -46,7 +47,7 @@
   </tbody>
 </table>
 </div>
-<% html_title(l(:button_annotate)) -%>
+<% html_title(l(:button_annotate)) %>
 
 <% content_for :header_tags do %>
 <%= stylesheet_link_tag 'scm' %>
@@ -67,7 +68,10 @@
 </form>
 </body>
 <script type="text/javascript">
-    function comment() {
-        
+    function commentLine(x) {
+       document.getElementById("lineNumber").value= x;       
+    }
+    function initComponents() {
+       document.getElementById("lineNumber").disabled = true;
     }
 </script>
