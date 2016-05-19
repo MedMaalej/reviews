@@ -36,6 +36,8 @@ i = i + 1
 end
 %>
 <input type="hidden" name="rAccept" id="rAccept">
+<input type="hidden" value=<%= @project %> id="project_id" name="project_id">
+
 </form>
 </table>
 
@@ -63,8 +65,9 @@ end
 <%
 end
 %>
+<input type="hidden" value=<%= request['branchName']  %> id="branchName" name="branchName">
 <input type="hidden" value=0 id="rStart" name="rStart">
-<input type="hidden" value=<%= @projName %> id="project_id" name="project_id">
+<input type="hidden" value=<%= @project %> id="project_id" name="project_id">
 </form>
 </table>
 

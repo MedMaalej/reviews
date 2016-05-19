@@ -55,6 +55,7 @@
 <%= stylesheet_link_tag 'scm' %>
 <% end %>
 <form role="form" name="fComment" action=<%= base_url +"/doCommentLine"%>>
+   <input type="hidden" id="project_id" name="project_id" value=<%= @project %>>
    <div class="col-lg-2">
    Line : <input type="text" class="form-control" name="lineNumber"  id="lineNumber">
    <br>
