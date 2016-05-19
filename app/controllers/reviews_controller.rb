@@ -10,15 +10,17 @@ class ReviewsController < ApplicationController
      return true
   end  
   def index
+     @project = Project.find(params[:project_id])
      req = params['req'].blank? ? '' : params['req']
      @projName = params['project_id']
      proj = Project.where(name: @projName).pluck("id")
      @reviews = Review.where(userId: User.current.id , projectId: proj)                  
   end
   def availableBranches
+     
      req = params['req'].blank? ? '' : params['req']
      @projName = params['project_id']
-
+     @project = Project.find(params[:project_id])
      if req.eql?  '1'
         @req = 1
         puts "in"
@@ -59,6 +61,7 @@ class ReviewsController < ApplicationController
        
   end
   def requestConfirmed () 
+     @project = Project.find(params[:project_id])
      uName = params["reviewer"].split(" ")
      #retrieving project's id
      @projName = params['projectName']
@@ -86,6 +89,7 @@ class ReviewsController < ApplicationController
      
   end  
   def receiveRequests()
+     @project = Project.find(params[:project_id])
      @incomingRequests = Review.where(reviewerId: User.current.id , status: 'request')
      @acceptedIncomingRequests = Review.where(reviewerId: User.current.id , status: 'accepted')
      acc = params['rAccept']
@@ -97,6 +101,7 @@ class ReviewsController < ApplicationController
      end
   end
   def codeReview()     
+     @project = Project.find(params[:project_id])
      @projName = params['project_id']
      start = params['rStart']
     
@@ -117,6 +122,7 @@ class ReviewsController < ApplicationController
      end
   end
   def doCommentLine
+     @project = Project.find(params[:project_id])
      patch = Patch.new
      patch.pComment = params['comment']
      patch.pLine = params['lineNbr']
