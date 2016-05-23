@@ -23,8 +23,7 @@ i = 0
    <td> <%= request['branchName']  %></td>
    <td> <%= Project.where(id: request['projectId']).pluck('name') [0]   %> </td>
    <td>     
-        <button class="btn btn-success"  id=<%= i %>   onclick="acceptReview()">Accept request</button> 
-        <input type="hidden" value=<%= request['id']  %> id="currentReview" name="currentReview">
+        <button class="btn btn-success"  id=<%= i %>   onclick="acceptReview(<%= request['id'] %>)">Accept request</button> 
         <button class="btn btn-danger" name="btn-reject" id="btn-reject">Reject request</button>  
         <button class="btn btn-primary" name="btn-postpone" id="btn-postpone">Postpone review</button>
      
@@ -38,7 +37,7 @@ end
 %>
 <input type="hidden" name="rAccept" id="rAccept">
 <input type="hidden" value=<%= @project %> id="project_id" name="project_id">
-
+<input type="hidden"  id="currentReview" name="currentReview">
 </form>
 </table>
 
@@ -78,8 +77,9 @@ end
 </body>
 <script type="text/javascript">
    
-   function acceptReview() {   
+   function acceptReview(x) {   
       document.getElementById("rAccept").value = 1;
+      document.getElementById("currentReview").value = x;        
    }
    function startReview(x) {
       document.getElementById("rStart").value = 1;
