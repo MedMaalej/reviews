@@ -29,19 +29,6 @@
         <input type="hidden" value=<%= line_num  %> id="line">
         <th class="line-num"><a href="#L<%= line_num %>"  onclick="commentLine(<%= line_num %>)"><%= line_num %></a></th>
         
-        <td class="revision">
-          <% if revision && revision != previous_revision %>
-            <%= revision.identifier ?
-                  link_to_revision(revision, @repository) : format_revision(revision) %>
-          <% end %>
-        </td>
-        <td class="author">
-          <% if revision && revision != previous_revision %>
-            <% author = Redmine::CodesetUtil.to_utf8(revision.author.to_s,
-                                                     @repository.repo_log_encoding) %>
-            <%= author.split('<').first %>
-          <% end %>
-        </td>
         <td class="line-code"><pre><%= line.html_safe %></pre></td>
       </tr>
       <% line_num += 1; previous_revision = revision %>

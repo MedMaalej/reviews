@@ -66,6 +66,7 @@ end
 end
 %>
 <input type="hidden" value=<%= request['branchName']  %> id="branchName" name="branchName">
+<input type="hidden" value=<%= request['reviewId'] %> name="reviewId" id="reviewId" >
 <input type="hidden" value=0 id="rStart" name="rStart">
 <input type="hidden" value=<%= @project %> id="project_id" name="project_id">
 </form>

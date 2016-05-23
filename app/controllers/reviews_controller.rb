@@ -115,9 +115,12 @@ class ReviewsController < ApplicationController
            puts str
            proj = params['projectName']
            system "cd "+str + "&& git pull origin master"
-           system "cd "+str + "&& git checkout -b "+ proj +"_review_212"
-           redirect_to '/projects/' +@projName+'/repository'        
-           
+           time = Time.new
+               
+           system "cd "+str + "&& git checkout -b "+ proj +"_review_"+time.day.to_s+"-"+time.month.to_s+"-"+time.year.to_s+"-"+
+           time.hour.to_s+"_"+time.min.to_s+"_"+time.sec.to_s
+           redirect_to '/projects/' +@projName+'/repository'
+          
         end 
      end
   end
@@ -127,8 +130,12 @@ class ReviewsController < ApplicationController
      patch.pComment = params['comment']
      patch.pLine = params['lineNbr']
      patch.pErrorId = Error.where(errorName: params['errors']).pluck('id')[0]
+     patch.ptime = Time.now.to_s
      patch.save     
      redirect_to :back
   end
-  
+  def getReviewByBranchName(branch)
+     rev = Review.where(branchName: branch).pluck('id')
+     return rev[0]
+  end  
 end
