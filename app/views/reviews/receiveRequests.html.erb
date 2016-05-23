@@ -57,16 +57,16 @@ end
    <td> <%= Project.where(id: request['projectId']).pluck('name') [0]   %> </td>
    <td>
         <button class="btn btn-info" name="btn-rev" id="btn-rev" onclick="startReview()">Start review</button>
-        <input type="hidden" value=<%= Project.where(id: request['projectId']).pluck('name') [0] %> id="projectName" name="projectName">
      
 
    </td>
    </tr>
+<input type="hidden" value=<%= request['id'] %> name="reviewId" id="reviewId" >
 <%
 end
 %>
+ <input type="hidden" value=<%= @project %> id="projectName" name="projectName">
 <input type="hidden" value=<%= request['branchName']  %> id="branchName" name="branchName">
-<input type="hidden" value=<%= request['reviewId'] %> name="reviewId" id="reviewId" >
 <input type="hidden" value=0 id="rStart" name="rStart">
 <input type="hidden" value=<%= @project %> id="project_id" name="project_id">
 </form>

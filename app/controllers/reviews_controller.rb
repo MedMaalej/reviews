@@ -104,24 +104,40 @@ class ReviewsController < ApplicationController
      @project = Project.find(params[:project_id])
      @projName = params['project_id']
      start = params['rStart']
-    
-     if start.eql? '1'  
-        @projName = params['projectName']  
+     
+     if start.eql? '1' 
+        rev = params['reviewId']
+        status = Review.where(id: rev).pluck("status")[0]
+        puts rev
+        @projName = params['projectName']
         proj = Project.where(name: @projName).pluck("id")
         url = Repository.where(project_id: proj).pluck("url")
-        if url != nil
-           str = url.join('')
-           str =str[0..str.length-6]
-           puts str
-           proj = params['projectName']
-           system "cd "+str + "&& git pull origin master"
-           time = Time.new
-               
-           system "cd "+str + "&& git checkout -b "+ proj +"_review_"+time.day.to_s+"-"+time.month.to_s+"-"+time.year.to_s+"-"+
-           time.hour.to_s+"_"+time.min.to_s+"_"+time.sec.to_s
-           redirect_to '/projects/' +@projName+'/repository'
-          
-        end 
+        if status.eql? 'accepted' 
+           if url != nil
+              str = url.join('')
+              str =str[0..str.length-6]
+              puts str
+              proj = params['projectName']
+              system "cd "+str + "&& git pull origin master"
+              time = Time.new               
+              system "cd "+str + "&& git checkout -b "+ proj +"_review_"+time.day.to_s+"-"+time.month.to_s+"-"+time.year.to_s+"-"+
+              time.hour.to_s+"_"+time.min.to_s+"_"+time.sec.to_s
+              redirect_to '/projects/' +@projName+'/repository' 
+           end 
+        elsif status.eql? 'in review' 
+           branch = params['branchName']
+           if url != nil
+              str = url.join('')
+              str =str[0..str.length-6]
+              puts str
+              proj = params['projectName']
+              time = Time.new
+              system "cd "+str + "&& git checkout  "+ branch
+              redirect_to '/projects/' +@projName+'/repository'
+           end              
+       else
+              puts 'none'
+       end
      end
   end
   def doCommentLine
