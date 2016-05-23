@@ -22,7 +22,7 @@ i = 0
    <%= User.where(id: request['userId']).pluck('lastname')[0] %> </td>
    <td> <%= request['branchName']  %></td>
    <td> <%= Project.where(id: request['projectId']).pluck('name') [0]   %> </td>
-   <td>     
+   <td>    
         <button class="btn btn-success"  id=<%= i %>   onclick="acceptReview(<%= request['id'] %>)">Accept request</button> 
         <button class="btn btn-danger" name="btn-reject" id="btn-reject">Reject request</button>  
         <button class="btn btn-primary" name="btn-postpone" id="btn-postpone">Postpone review</button>
@@ -35,15 +35,17 @@ i = 0
 i = i + 1
 end
 %>
+<input type="hidden" id="branchName"   name="branchName">
 <input type="hidden" name="rAccept" id="rAccept">
 <input type="hidden" value=<%= @project %> id="project_id" name="project_id">
 <input type="hidden"  id="currentReview" name="currentReview">
 </form>
 </table>
 
-<h3> Accepted review requests </h3> <br> <br>
+<h3> Accepted review requests / Active  review sessions </h3> <br> <br>
 <table class="table">
 <th> Review </th>
+<th> Status </th>
 <th> Developer  </th>
 <th> Branch </th>
 <th> Project</th>
@@ -54,26 +56,28 @@ end
 %>
    <tr>
    <td> <%= "Review "+ request['id'].to_s %> </td>
+   <td><%= request['status'] %>  </td>
    <td> <%= User.where(id: request['userId']).pluck('firstname')[0] %> &nbsp
    <%= User.where(id: request['userId']).pluck('lastname')[0] %> </td>
    <td> <%= request['branchName']  %></td>
    <td> <%= Project.where(id: request['projectId']).pluck('name') [0]   %> </td>
    <td>
-        <button class="btn btn-info" name="btn-rev" id="btn-rev" onclick="startReview(<%= request['id'] %>)">Start review</button>
-        <input type="hidden" value=<%= request['branchName']  %>" id="branchName" name="branchName">
+        
+        <button class="btn btn-info" name="btn-rev" id="btn-rev" onclick="startReview(<%= request['id'] %>,'<%= request['branchName'] %>')">Start review</button>
    </td>
    </tr>
 
 <%
 end
 %>
+<input type="hidden" id="branch" name="branch">
 <input type="hidden"  id="reviewId" name="reviewId">
 <input type="hidden" value=<%= @project %> id="projectName" name="projectName">
 <input type="hidden" value=0 id="rStart" name="rStart">
 <input type="hidden" value=<%= @project %> id="project_id" name="project_id">
 </form>
 </table>
-
+<br> 
 </body>
 <script type="text/javascript">
    
@@ -81,9 +85,12 @@ end
       document.getElementById("rAccept").value = 1;
       document.getElementById("currentReview").value = x;        
    }
-   function startReview(x) {
+   function startReview(x,y) {
       document.getElementById("rStart").value = 1;
       document.getElementById("reviewId").value = x;
-   }
+      document.getElementById("branch").value = y;
+      alert(y);
+   } 
+   
   
 </script>

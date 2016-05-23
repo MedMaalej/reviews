@@ -91,7 +91,7 @@ class ReviewsController < ApplicationController
   def receiveRequests()
      @project = Project.find(params[:project_id])
      @incomingRequests = Review.where(reviewerId: User.current.id , status: 'request')
-     @acceptedIncomingRequests = Review.where(reviewerId: User.current.id , status: 'accepted')
+     @acceptedIncomingRequests = Review.where(reviewerId: User.current.id , status: ['accepted','in review'])
      acc = params['rAccept']
      if acc.eql?  '1' 
         r = Review.find_by(id: params['currentReview'])
@@ -123,11 +123,12 @@ class ReviewsController < ApplicationController
               time.hour.to_s+"_"+time.min.to_s+"_"+time.sec.to_s
               r = Review.find_by(id: params['reviewId'])
               r.update(status: 'in review')
-
+              r.update(branchName: str+";"+proj +"_review_"+time.day.to_s+"-"+time.month.to_s+"-"+time.year.to_s+"-"+
+              time.hour.to_s+"_"+time.min.to_s+"_"+time.sec.to_s)
               redirect_to '/projects/' +@projName+'/repository' 
            end 
         elsif status.eql? 'in review' 
-           branch = params['branchName']
+           branch = params['branch']
            puts branch+".........."
            if url != nil
               str = url.join('')
@@ -135,7 +136,8 @@ class ReviewsController < ApplicationController
               puts str
               proj = params['projectName']
               time = Time.new
-              system "cd "+str + "&& git checkout  "+ branch
+              br = branch.split(";") 
+              system "cd "+str + "&& git checkout  "+ br[1]
               redirect_to '/projects/' +@projName+'/repository'
            end              
        else
