@@ -17,13 +17,14 @@
 i = 0
 @incomingRequests.each do |request|
 %>
-   <tr><td> <%= User.where(id: request['userId']).pluck('firstname')[0] %> &nbsp
+   <tr>
+   <td> <%= User.where(id: request['userId']).pluck('firstname')[0] %> &nbsp
    <%= User.where(id: request['userId']).pluck('lastname')[0] %> </td>
    <td> <%= request['branchName']  %></td>
    <td> <%= Project.where(id: request['projectId']).pluck('name') [0]   %> </td>
    <td>     
         <button class="btn btn-success"  id=<%= i %>   onclick="acceptReview()">Accept request</button> 
-        <input type="hidden" value=<%= request['id']  %>" id="currentReview" name="currentReview">
+        <input type="hidden" value=<%= request['id']  %> id="currentReview" name="currentReview">
         <button class="btn btn-danger" name="btn-reject" id="btn-reject">Reject request</button>  
         <button class="btn btn-primary" name="btn-postpone" id="btn-postpone">Postpone review</button>
      
@@ -43,6 +44,7 @@ end
 
 <h3> Accepted review requests </h3> <br> <br>
 <table class="table">
+<th> Review </th>
 <th> Developer  </th>
 <th> Branch </th>
 <th> Project</th>
@@ -51,22 +53,23 @@ end
 <%
 @acceptedIncomingRequests.each do |request|
 %>
-   <tr><td> <%= User.where(id: request['userId']).pluck('firstname')[0] %> &nbsp
+   <tr>
+   <td> <%= "Review "+ request['id'].to_s %> </td>
+   <td> <%= User.where(id: request['userId']).pluck('firstname')[0] %> &nbsp
    <%= User.where(id: request['userId']).pluck('lastname')[0] %> </td>
    <td> <%= request['branchName']  %></td>
    <td> <%= Project.where(id: request['projectId']).pluck('name') [0]   %> </td>
    <td>
-        <button class="btn btn-info" name="btn-rev" id="btn-rev" onclick="startReview()">Start review</button>
-     
-
+        <button class="btn btn-info" name="btn-rev" id="btn-rev" onclick="startReview(<%= request['id'] %>)">Start review</button>
+        <input type="hidden" value=<%= request['branchName']  %>" id="branchName" name="branchName">
    </td>
    </tr>
-<input type="hidden" value=<%= request['id'] %> name="reviewId" id="reviewId" >
+
 <%
 end
 %>
- <input type="hidden" value=<%= @project %> id="projectName" name="projectName">
-<input type="hidden" value=<%= request['branchName']  %> id="branchName" name="branchName">
+<input type="hidden"  id="reviewId" name="reviewId">
+<input type="hidden" value=<%= @project %> id="projectName" name="projectName">
 <input type="hidden" value=0 id="rStart" name="rStart">
 <input type="hidden" value=<%= @project %> id="project_id" name="project_id">
 </form>
@@ -78,8 +81,9 @@ end
    function acceptReview() {   
       document.getElementById("rAccept").value = 1;
    }
-   function startReview() {
+   function startReview(x) {
       document.getElementById("rStart").value = 1;
+      document.getElementById("reviewId").value = x;
    }
   
 </script>

@@ -104,7 +104,6 @@ class ReviewsController < ApplicationController
      @project = Project.find(params[:project_id])
      @projName = params['project_id']
      start = params['rStart']
-     
      if start.eql? '1' 
         rev = params['reviewId']
         status = Review.where(id: rev).pluck("status")[0]
@@ -122,10 +121,14 @@ class ReviewsController < ApplicationController
               time = Time.new               
               system "cd "+str + "&& git checkout -b "+ proj +"_review_"+time.day.to_s+"-"+time.month.to_s+"-"+time.year.to_s+"-"+
               time.hour.to_s+"_"+time.min.to_s+"_"+time.sec.to_s
+              r = Review.find_by(id: params['reviewId'])
+              r.update(status: 'in review')
+
               redirect_to '/projects/' +@projName+'/repository' 
            end 
         elsif status.eql? 'in review' 
            branch = params['branchName']
+           puts branch+".........."
            if url != nil
               str = url.join('')
               str =str[0..str.length-6]
@@ -136,7 +139,6 @@ class ReviewsController < ApplicationController
               redirect_to '/projects/' +@projName+'/repository'
            end              
        else
-              puts 'none'
        end
      end
   end
