@@ -184,7 +184,8 @@ class ReviewsController < ApplicationController
      sql = "Select id from trackers where name='Code review';"
      #track = ActiveRecord::Base.connection.execute(sql)
          
-     issue = Issue.new(:project_id => projId, :tracker_id => 1, :author_id => User.current.id, :subject => 'review_'+session[:rId].to_s, :assigned_to_id => developerId, :description => '---Code review feature---')
+     issue = Issue.new(:project_id => projId, :tracker_id => 2, :author_id => User.current.id, :subject => 'code_review_'+session[:rId].to_s, :assigned_to_id => developerId, :description => (patch.pLine).to_s+':'+patch.pComment)
+  
      issue.save
      patch.issueId = issue.id           
      patch.pFileName = session[:path]
