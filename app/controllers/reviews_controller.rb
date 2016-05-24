@@ -83,7 +83,7 @@ class ReviewsController < ApplicationController
      url = Repository.where(project_id: proj).pluck("url")
      str = url.join('')
      str =str[0..str.length-6]
-     r.branchName =str+";branch:"+params["branch"]
+     r.branchName =str+";"+params["branch"]
      r.projectId = proj[0]
      r.save
      
@@ -125,6 +125,7 @@ class ReviewsController < ApplicationController
               r.update(status: 'in review')
               r.update(branchName: str+";"+proj +"_review_"+time.day.to_s+"-"+time.month.to_s+"-"+time.year.to_s+"-"+
               time.hour.to_s+"_"+time.min.to_s+"_"+time.sec.to_s)
+              session[:rId] = r['id']
               redirect_to '/projects/' +@projName+'/repository' 
            end 
         elsif status.eql? 'in review' 
@@ -138,6 +139,8 @@ class ReviewsController < ApplicationController
               time = Time.new
               br = branch.split(";") 
               system "cd "+str + "&& git checkout  "+ br[1]
+              r = Review.find_by(id: params['reviewId'])
+              session[:rId] = r['id']
               redirect_to '/projects/' +@projName+'/repository'
            end              
        else
@@ -151,6 +154,7 @@ class ReviewsController < ApplicationController
      patch.pLine = params['lineNbr']
      patch.pErrorId = Error.where(errorName: params['errors']).pluck('id')[0]
      patch.ptime = Time.now.to_s
+     patch.reviewId = session[:rId]
      patch.save     
      redirect_to :back
   end
