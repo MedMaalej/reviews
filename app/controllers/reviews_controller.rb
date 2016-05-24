@@ -181,6 +181,7 @@ class ReviewsController < ApplicationController
      issue = Issue.new(:project_id => projId, :tracker_id => 1, :author_id => User.current.id, :subject => 'review_'+session[:rId].to_s)
      issue.save
      patch.issueId = issue.id           
+     patch.pFileName = session[:path]
      patch.save     
      redirect_to :back
   end

@@ -15,6 +15,7 @@
 
 <h2><%= render :partial => 'breadcrumbs', :locals => { :path => @path, :kind => 'file', :revision => @rev } %></h2>
 
+<% session[:path] = @path %>
 <%= render :partial => 'link_to_functions' %>
 
 <% colors = Hash.new {|k,v| k[v] = (k.size % 12) } %>

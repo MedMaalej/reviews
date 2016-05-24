@@ -12,7 +12,8 @@ class CreatePatches < ActiveRecord::Migration
       t.integer :pLine
       
       t.integer :pErrorId
-     
+       
+      t.string :pFileName     
     end
 
   end
