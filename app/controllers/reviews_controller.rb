@@ -159,7 +159,6 @@ class ReviewsController < ApplicationController
               str =str[0..str.length-6]
               puts str
               proj = params['projectName']
-              time = Time.new
               br = branch.split(";") 
               system "cd "+str + "&& git checkout  "+ br[1]
               r = Review.find_by(id: params['reviewId'])
@@ -178,6 +177,10 @@ class ReviewsController < ApplicationController
      patch.pErrorId = Error.where(errorName: params['errors']).pluck('id')[0]
      patch.ptime = Time.now.to_s
      patch.reviewId = session[:rId]
+     projId = (Project.find_by(name: params[:project_id]))['id']
+     issue = Issue.new(:project_id => projId, :tracker_id => 1, :author_id => User.current.id, :subject => 'review_'+session[:rId].to_s)
+     issue.save
+     patch.issueId = issue.id           
      patch.save     
      redirect_to :back
   end
