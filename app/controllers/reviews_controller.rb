@@ -11,6 +11,17 @@ class ReviewsController < ApplicationController
   end  
   def index
      @project = Project.find(params[:project_id])
+     tr = Tracker.find_by(name: 'Code review')
+     if tr == nil
+        t  = Tracker.new
+        t.name="Code review"
+        t.is_in_chlog = 1
+        t.position = 4
+        t.is_in_roadmap = 1
+        t.fields_bits = 0
+        t.default_status_id = 1
+        t.save 
+     end
      req = params['req'].blank? ? '' : params['req']
      @projName = params['project_id']
      proj = Project.where(name: @projName).pluck("id")
@@ -90,6 +101,18 @@ class ReviewsController < ApplicationController
   end  
   def receiveRequests()
      @project = Project.find(params[:project_id])
+     tr = Tracker.find_by(name: 'Code review')
+     if tr == nil
+        t  = Tracker.new
+        t.name="Code review"
+        t.is_in_chlog = 1
+        t.position = 4
+        t.is_in_roadmap = 1
+        t.fields_bits = 0
+        t.default_status_id = 1
+        t.save
+     end
+
      @incomingRequests = Review.where(reviewerId: User.current.id , status: 'request')
      @acceptedIncomingRequests = Review.where(reviewerId: User.current.id , status: ['accepted','in review'])
      acc = params['rAccept']
