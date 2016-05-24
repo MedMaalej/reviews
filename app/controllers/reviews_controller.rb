@@ -112,9 +112,10 @@ class ReviewsController < ApplicationController
         t.default_status_id = 1
         t.save
      end
-
+     #projId = (Project.find_by(name: params['project_id']))['id']
      @incomingRequests = Review.where(reviewerId: User.current.id , status: 'request')
      @acceptedIncomingRequests = Review.where(reviewerId: User.current.id , status: ['accepted','in review'])
+     
      acc = params['rAccept']
      if acc.eql?  '1' 
         r = Review.find_by(id: params['currentReview'])
@@ -122,6 +123,7 @@ class ReviewsController < ApplicationController
         @accepted = 1
         #redirect_to :receiveRequests
      end
+     
   end
   def codeReview()     
      @project = Project.find(params[:project_id])
@@ -178,7 +180,11 @@ class ReviewsController < ApplicationController
      patch.ptime = Time.now.to_s
      patch.reviewId = session[:rId]
      projId = (Project.find_by(name: params[:project_id]))['id']
-     issue = Issue.new(:project_id => projId, :tracker_id => 1, :author_id => User.current.id, :subject => 'review_'+session[:rId].to_s)
+     developerId = (Review.find_by(id: session[:rId]))['userId']
+     sql = "Select id from trackers where name='Code review';"
+     #track = ActiveRecord::Base.connection.execute(sql)
+         
+     issue = Issue.new(:project_id => projId, :tracker_id => 1, :author_id => User.current.id, :subject => 'review_'+session[:rId].to_s, :assigned_to_id => developerId, :description => '---Code review feature---')
      issue.save
      patch.issueId = issue.id           
      patch.pFileName = session[:path]
