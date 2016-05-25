@@ -1,0 +1,24 @@
+<link href="plugin_assets/reviews/c3/c3.css" rel="stylesheet" type="text/css">
+
+<!-- Load d3.js and c3.js -->
+<script src="plugin_assets/reviews/c3/d3.v3.min.js" charset="utf-8"></script>
+<script src="plugin_assets/reviews/c3/c3.min.js"></script>
+<div id="chart"></div>
+<script type="text/javascript">
+   
+ 
+var chart = c3.generate({
+    data: {
+        // iris data from R
+        columns: [
+            ['data1', 30],
+            ['data2', 120],
+        ],
+        type : 'pie',
+        onclick: function (d, i) { console.log("onclick", d, i); },
+        onmouseover: function (d, i) { console.log("onmouseover", d, i); },
+        onmouseout: function (d, i) { console.log("onmouseout", d, i); }
+    }
+});
+
+</script>

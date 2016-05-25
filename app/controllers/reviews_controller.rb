@@ -221,6 +221,9 @@ class ReviewsController < ApplicationController
      rev = Review.where(branchName: branch).pluck('id')
      return rev[0]
   end 
-  
+  def managerDashboard
+       @project = Project.find(params[:project_id])
+         
+  end   
  
 end
