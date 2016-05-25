@@ -88,7 +88,7 @@ class ReviewsController < ApplicationController
      time1 = Time.new
      r.dater = time1.inspect
      r.comment = "No comments"
-     r.score = 1
+     r.score = -1
      r.sprintId = 15
      proj  = Project.where(name: @projName).pluck("id")
      url = Repository.where(project_id: proj).pluck("url")
@@ -173,6 +173,14 @@ class ReviewsController < ApplicationController
   end
   def doCommentLine
      @project = Project.find(params[:project_id])
+     if(params['scored'].eql? '1')
+        
+        review = Review.find_by(id: session[:rId])
+        review.update(score: params['score'].to_i)
+        #puts "Yessssssssss"
+        redirect_to :back
+        return
+     end
      patch = Patch.new
      patch.pComment = params['comment']
      patch.pLine = params['lineNbr']
@@ -182,10 +190,8 @@ class ReviewsController < ApplicationController
      projId = (Project.find_by(name: params[:project_id]))['id']
      developerId = (Review.find_by(id: session[:rId]))['userId']
      sql = "Select id from trackers where name='Code review';"
-     #track = ActiveRecord::Base.connection.execute(sql)
-         
+     #track = ActiveRecord::Base.connection.execute(sql)         
      issue = Issue.new(:project_id => projId, :tracker_id => 2, :author_id => User.current.id, :subject => 'code_review_'+session[:rId].to_s, :assigned_to_id => developerId, :description => (patch.pLine).to_s+':'+patch.pComment)
-  
      issue.save
      patch.issueId = issue.id           
      patch.pFileName = session[:path]
@@ -195,5 +201,7 @@ class ReviewsController < ApplicationController
   def getReviewByBranchName(branch)
      rev = Review.where(branchName: branch).pluck('id')
      return rev[0]
-  end  
+  end 
+  
+ 
 end

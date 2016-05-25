@@ -12,7 +12,12 @@
 <div class="contextual">
   <%= render :partial => 'navigation' %>
 </div>
-
+<form role="form" name="validateReview" action=<%= base_url +"/doCommentLine"%>>
+   <input type="hidden" id="project_id" name="project_id" value=<%= @project %>>
+   <input type="number" name="score" id="score" min="0" max="5">
+   <button class="btn btn-info" type="submit" onclick="setValidate()" >Send score</button>
+   <input type="hidden" name="scored" id="scored">
+</form>
 <h2><%= render :partial => 'breadcrumbs', :locals => { :path => @path, :kind => 'file', :revision => @rev } %></h2>
 
 <% session[:path] = @path %>
@@ -54,11 +59,12 @@
       <option> Exception handling  </option>
       <option> Stack overflow </option>
    </select>
-   <br>
+   <br> <br>
    <button class="btn btn-info" id="btn-comment" type="submit" >Save</button>
-   <button class="btn btn-info" id="btn-comment" type="submit" >Create an issue</button>
+   
   </div>
  <input class="form-control" type="hidden" name="lineNbr" id="lineNbr">
+
 </form>
 </body>
 <script type="text/javascript">
@@ -68,5 +74,9 @@
     }
     function initComponents() {
        document.getElementById("lineNumber").disabled = true;
+    }
+    
+    function setValidate() {
+       document.getElementById("scored").value = 1;
     }
 </script>

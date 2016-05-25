@@ -1,3 +1,11 @@
+<% base_url = "http://192.168.1.126:3000"%>
+<body onload="initComponents()"> <link href=<%= base_url +"/plugin_assets/reviews/bstrp/css/bootstrap.min.css"%> rel="stylesheet">
+ <link rel="stylesheet" href=<%= base_url+ "http://192.168.1.126:3000/plugin_assets/reviews/awesomplete/awesomplete.css" %> />
+ <script src=<%= base_url+"/plugin_assets/reviews/awesomplete/awesomplete.js" %> async></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+ <!-- Include all compiled plugins (below), or include individual files as needed -->
+ <script src=<%=base_url+ "/plugin_assets/reviews/bstrp/js/bootstrap.min.js" %>></script>
+
 <% content_for :header_tags do %>
   <%= javascript_include_tag 'repository_navigation' %>
 <% end %>
