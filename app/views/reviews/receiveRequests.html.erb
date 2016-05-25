@@ -24,8 +24,8 @@ i = 0
    <td> <%= Project.where(id: request['projectId']).pluck('name') [0]   %> </td>
    <td>    
         <button class="btn btn-success"  id=<%= i %>   onclick="acceptReview(<%= request['id'] %>)">Accept request</button> 
-        <button class="btn btn-danger" name="btn-reject" id="btn-reject">Reject request</button>  
-        <button class="btn btn-primary" name="btn-postpone" id="btn-postpone">Postpone review</button>
+        <button class="btn btn-danger" name="btn-reject" id="btn-reject" onclick="rejectReview(<%= request['id'] %>)">Reject request</button>  
+        <button class="btn btn-primary" name="btn-postpone" id="btn-postpone" onclick="postponeReview(<%= request['id'] %>)">Postpone review</button>
      
       
    </td>
@@ -37,6 +37,8 @@ end
 %>
 <input type="hidden" id="branchName"   name="branchName">
 <input type="hidden" name="rAccept" id="rAccept">
+<input type="hidden" name="rReject" id="rReject">
+<input type="hidden" name="rPostpone" id="rPostpone">
 <input type="hidden" value=<%= @project %> id="project_id" name="project_id">
 <input type="hidden"  id="currentReview" name="currentReview">
 </form>
@@ -91,6 +93,12 @@ end
       document.getElementById("branch").value = y;
       alert(y);
    } 
-   
-  
+   function rejectReview(x) {
+      document.getElementById("rReject").value = 1;
+      document.getElementById("currentReview").value = x;
+   }   
+  function postponeReview(x) {
+      document.getElementById("rPostpone").value = 1;
+      document.getElementById("currentReview").value = x;
+   }
 </script>

@@ -123,6 +123,21 @@ class ReviewsController < ApplicationController
         @accepted = 1
         #redirect_to :receiveRequests
      end
+     rej = params['rReject']
+     if rej.eql?  '1'
+        r = Review.find_by(id: params['currentReview'])
+        r.update(status: 'rejected')
+        @rejected = 1
+        #redirect_to :receiveRequests
+     end
+     arch = params['rPostpone']
+     if arch.eql?  '1'
+        r = Review.find_by(id: params['currentReview'])
+        r.update(status: 'archived')
+        @archived = 1
+        #redirect_to :receiveRequests
+     end
+
      
   end
   def codeReview()     
