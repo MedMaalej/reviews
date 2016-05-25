@@ -177,6 +177,10 @@ class ReviewsController < ApplicationController
         
         review = Review.find_by(id: session[:rId])
         review.update(score: params['score'].to_i)
+        session[:lastScore] = params['score'].to_i
+        if(params['score'].to_i == 5)
+             review.update(status: 'validated')
+        end
         #puts "Yessssssssss"
         redirect_to :back
         return

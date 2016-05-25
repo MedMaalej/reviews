@@ -14,8 +14,10 @@
 </div>
 <form role="form" name="validateReview" action=<%= base_url +"/doCommentLine"%>>
    <input type="hidden" id="project_id" name="project_id" value=<%= @project %>>
-   <input type="number" name="score" id="score" min="0" max="5">
+ <b> Score</b>  <input type="number" name="score" id="score" min="0" max="5">
    <button class="btn btn-info" type="submit" onclick="setValidate()" >Send score</button>
+   <br>
+    <font color="blue"><%= "The last score:"+session[:lastScore].to_s %></font>
    <input type="hidden" name="scored" id="scored">
 </form>
 <h2><%= render :partial => 'breadcrumbs', :locals => { :path => @path, :kind => 'file', :revision => @rev } %></h2>
