@@ -4,9 +4,9 @@ Redmine::Plugin.register :reviews do
   description 'Code review plugin'
   version '0.0.1'
   
-  project_module :reviews do
-     permission :reviewRequests, { :reviews => [:index] }, :public => true
-     permission :receiveRequests, { :reviews => [:receiveRequests] }, :public => true
+  project_module :reviews do     
+     permission :Send_review_requests,  :reviews => :index 
+     permission :Receive_requests,  :reviews => :receiveRequests
      menu :project_menu, :reviewRequests, { :controller => 'reviews', :action => 'index' }, :caption => 'Make review requests',
       :after => :activity,  :param => :project_id
      menu :project_menu, :receiveRequests, { :controller => 'reviews', :action => 'receiveRequests' }, :caption => 'Incoming review requests', 
