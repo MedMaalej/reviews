@@ -228,14 +228,38 @@ class ReviewsController < ApplicationController
          fn = name[0]
          ln = name[1]        
          uid = (User.find_by(firstname: fn, lastname: ln))['id']
-         sql = "select e.errorName,count(*)  from users u,reviews r,patches p,errors e  where  (u.id = r.userId and r.id = p.reviewId and e.id = p.pErrorId) group by e.errorName"
+         sql = "select e.errorName,count(*)  from users u,reviews r,patches p,errors e  where  (u.id = r.userId and r.id = p.reviewId and e.id = p.pErrorId and u.id="+uid.to_s+") group by e.errorName"
          res= ActiveRecord::Base.connection.execute(sql)
-         h = Hash.new()
+         i= 0
+         
          res.each do |r|
-            h[r[0]] = r[1]
-            puts r[0]
+            
+            if i == 0
+               @a = r[1].to_s
+               if (@a == nil)
+                   @a = "0"
+               end
+            elsif i==1
+               @b = r[1].to_s
+               if (@b == nil)
+                   @b = "0"
+               end
+
+            elsif i==2
+               @c = r[1].to_s
+               if (@c == nil)
+                   @c = "0" 
+               end
+            elsif i== 3
+               @d = r[1].to_s
+               if (@d == nil)
+                   @d = "0"
+               end
+            else
+            end
+            i = i +1   
          end
-         @showErrors = h
+         
          
      end
   end        

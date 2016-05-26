@@ -23,6 +23,12 @@
 <div id="chart"></div>
 
 <script type="text/javascript">
+var x = parseInt(<%= @a %>);
+
+var y =  parseInt(<%= @b %>);
+
+var z = parseInt(<%= @c %>);
+var t = parseInt(<%= @d %>);
 
 
 var chart = c3.generate({
@@ -31,8 +37,10 @@ var chart = c3.generate({
       
         
           columns: [
-            ['data1', 30],
-            ['data2', 120],
+            ['Exception handling', x],
+            ['Stack overflow', y],
+            ['Bad design', z],
+            ['Line is too long', t],
         ],
        
         
