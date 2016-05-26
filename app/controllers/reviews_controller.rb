@@ -1,7 +1,5 @@
 class ReviewsController < ApplicationController
   unloadable
-
-
   def isMember(userId,projectId)
      found = Member.where(user_id: userId,project_id: projectId)
      if found == nil
@@ -222,8 +220,23 @@ class ReviewsController < ApplicationController
      return rev[0]
   end 
   def managerDashboard
-       @project = Project.find(params[:project_id])
+     @project = Project.find(params[:project_id])
+     @users = User.all
+     if(params['nameChanged'].eql? '1')
+         dev = params['developer']
+         name = dev.split(" ")
+         fn = name[0]
+         ln = name[1]        
+         uid = (User.find_by(firstname: fn, lastname: ln))['id']
+         sql = "select e.errorName,count(*)  from users u,reviews r,patches p,errors e  where  (u.id = r.userId and r.id = p.reviewId and e.id = p.pErrorId) group by e.errorName"
+         res= ActiveRecord::Base.connection.execute(sql)
+         h = Hash.new()
+         res.each do |r|
+            h[r[0]] = r[1]
+            puts r[0]
+         end
+         @showErrors = h
          
-  end   
- 
+     end
+  end        
 end
