@@ -18,8 +18,8 @@ class ReviewsController < ApplicationController
         t.is_in_roadmap = 1
         t.fields_bits = 0
         t.default_status_id = 1
-        t.save 
-     end
+        t.save  
+     end  
      req = params['req'].blank? ? '' : params['req']
      @projName = params['project_id']
      proj = Project.where(name: @projName).pluck("id")
@@ -207,8 +207,9 @@ class ReviewsController < ApplicationController
      projId = (Project.find_by(name: params[:project_id]))['id']
      developerId = (Review.find_by(id: session[:rId]))['userId']
      sql = "Select id from trackers where name='Code review';"
-     #track = ActiveRecord::Base.connection.execute(sql)         
-     issue = Issue.new(:project_id => projId, :tracker_id => 2, :author_id => User.current.id, :subject => 'code_review_'+session[:rId].to_s, :assigned_to_id => developerId, :description => (patch.pLine).to_s+':'+patch.pComment)
+     #track = ActiveRecord::Base.connection.execute(sql)
+     tr =(Tracker.find_by(name: 'Code review'))['id']
+     issue = Issue.new(:project_id => projId, :tracker_id => tr, :author_id => User.current.id, :subject => 'code_review_'+session[:rId].to_s, :assigned_to_id => developerId, :description => (patch.pLine).to_s+':'+patch.pComment)
      issue.save
      patch.issueId = issue.id           
      patch.pFileName = session[:path]
