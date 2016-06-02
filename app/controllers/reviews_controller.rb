@@ -223,13 +223,21 @@ class ReviewsController < ApplicationController
   def managerDashboard
      @project = Project.find(params[:project_id])
      @users = User.all
+     @reviews = Review.all
+     @errors = Error.all
      if(params['nameChanged'].eql? '1')
          dev = params['developer']
+         rev = params['review']
+         revId = (rev.split(" "))[1]
          name = dev.split(" ")
          fn = name[0]
          ln = name[1]        
          uid = (User.find_by(firstname: fn, lastname: ln))['id']
-         sql = "select e.errorName,count(*)  from users u,reviews r,patches p,errors e  where  (u.id = r.userId and r.id = p.reviewId and e.id = p.pErrorId and u.id="+uid.to_s+") group by e.errorName"
+         if revId == nil
+             sql = "select e.errorName,count(*)  from users u,reviews r,patches p,errors e  where  (u.id = r.userId and r.id = p.reviewId and e.id = p.pErrorId and u.id="+uid.to_s+") group by e.errorName"
+         else
+             sql = "select e.errorName,count(*)  from users u,reviews r,patches p,errors e  where  (u.id = r.userId and r.id = p.reviewId and e.id = p.pErrorId and u.id="+uid.to_s+" and r.id="+revId.to_s+") group by e.errorName"
+         end  
          res= ActiveRecord::Base.connection.execute(sql)
          i= 0
          

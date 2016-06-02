@@ -9,18 +9,26 @@
 <script src="plugin_assets/reviews/c3/d3.v3.min.js" charset="utf-8"></script>
 <script src="plugin_assets/reviews/c3/c3.min.js"></script>
 <form role="form" name="fShowStats" class="form-inline" action="managerDashboard">
-    <select name="developer" id="developer">
+    Developer:
+    <select name="developer" id="developer" class="form-control">
         <% @users.each do |user| %>
            <% if user['firstname'] != nil && user['lastname'] != nil && user['lastname'] != "Anonymous" %>
 		<option><%= user['firstname']+' '+user['lastname'] %>  </option>
            <%end%>
         <%end%>
-    </select>
+    </select><br><br>
     <input type="hidden" name="nameChanged" id="nameChanged">
-     <input type="hidden" name="project_id" id="project_id" value=<%= @project  %>> 
+    <input type="hidden" name="project_id" id="project_id" value=<%= @project  %>> 
+    Review :
+    <select name="review" id="review" class="form-control">
+         <% @reviews.each do |rev| %>
+            <option> <%= "review "+rev['id'].to_s %> </option>     
+         <% end %>
+    </select>
+    <br><br>
     <button class="btn btn-info" type="submit" onclick="showStatsForName()"> Show statistics </button>
 </form>
-<div id="chart"></div>
+<div class="pull-left"  id="chart"></div>
 
 <script type="text/javascript">
 var x = parseInt(<%= @a %>);
