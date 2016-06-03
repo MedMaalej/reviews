@@ -26,7 +26,7 @@
 <button type="button"  class ="btn btn-info" id="sendReqSecondButton"  onclick="sendRequest()"> Send a review request </button>
 <br><br>
 <table class="table">
-  
+  <th> Correction </th>
   <th> Branch  </th>
   <th> Reviewer </th>
   <th> Score </th>
@@ -36,13 +36,15 @@
   @reviews.each do |review|
   %>
      <tr> 
-       
+        <td> <% if review['status'].eql? 'in review'%>
+          <input type="checkbox" name=<%= "c_"+review['id'].to_s %> id=<%= "c_"+review['id'].to_s %> value=<%= review['id'] %> onclick="appendReview(this.value)"> 
+        <%end   %></td>
         <td>  <%= review['branchName'] %> </td>
         <td> <%= User.where(id: review['reviewerId']).pluck("firstname")[0]%>&nbsp <%= User.where(id: review['reviewerId']).pluck("lastname")[0] %> </td>
         <td>  <%= review['score'] %> </td>
         <td> <%= review['status'] %> </td>
         <td>  <%= review['comment'] %> </td>
- 
+        
      </tr>
      
   <%  
@@ -51,6 +53,7 @@
 
 
    %>   
+ 
 </table>
 <form  name="fReq" role="form" action="availableBranches">
     <input type="hidden" name="req" id="req" value=0>
@@ -59,7 +62,13 @@
 <br> <br>
 <br> <br>
 
-<center><button type="button"  class ="btn btn-info" id="sendReq"  onclick="sendRequest()"> Send a review request </button></center>
+<center><button type="button"  class ="btn btn-info" id="sendReq"  onclick="sendRequest()"> Send a review request </button>
+<button type="button"  class ="btn btn-info" id="sendCorrReq"  onclick="sendCorrectionRequest()"> Send correction requests </button>
+</center>
+
+</form>
+<form  name="fCorr" role="form" action="availableBranches">
+   <input type="hidden" name="correctedReviews" id="correctedReviews">
 
 </form>
 <br><br>
@@ -71,6 +80,9 @@
 
    function initComponents () {
    }
+   function contains (arr,val) {
+       return arr.indexOf(val);
+   }
    function chooseReviewer () {
       alert (document.getElementById("branch").value);
       
@@ -78,5 +90,33 @@
    function sendRequest() {
       document.getElementById("req").value = 1;
       document.forms["fReq"].submit();      
+   }
+   function appendReview(x) {
+      var chkboxName = "c_"+x;
+      alert(chkboxName);
+      
+      var chkbox = document.getElementById(chkboxName);
+     
+      var str = document.getElementById('correctedReviews').value;
+      var arr = str.split(",");
+      
+      if(chkbox.checked) {
+         if(contains(arr,x) == -1) {
+             document.getElementById('correctedReviews').value = document.getElementById('correctedReviews').value+x+",";
+             alert(document.getElementById('correctedReviews').value);
+         }
+    
+      }
+      else {
+         var index = arr.indexOf(x);
+         if (index > -1) {
+            arr.splice(index, 1);
+         }
+         document.getElementById('correctedReviews').value = arr.join();
+         alert(document.getElementById('correctedReviews').value);
+      }
+   }
+   function sendCorrectionRequest() {
+      alert(document.getElementById('correctedReviews').value);
    }
 </script>
