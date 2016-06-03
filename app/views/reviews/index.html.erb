@@ -64,13 +64,15 @@
 
 <center><button type="button"  class ="btn btn-info" id="sendReq"  onclick="sendRequest()"> Send a review request </button>
 <button type="button"  class ="btn btn-info" id="sendCorrReq"  onclick="sendCorrectionRequest()"> Send correction requests </button>
+
 </center>
 
 </form>
-<form  name="fCorr" role="form" action="availableBranches">
+<form  name="fCorr" role="form" action="confirmCorrections">
    <input type="hidden" name="correctedReviews" id="correctedReviews">
-
+   <input type="hidden" name="project_id" id="project_id" value=<%= @project %>>  
 </form>
+
 <br><br>
 <center>
 </div>
@@ -93,7 +95,7 @@
    }
    function appendReview(x) {
       var chkboxName = "c_"+x;
-      alert(chkboxName);
+      //alert(chkboxName);
       
       var chkbox = document.getElementById(chkboxName);
      
@@ -103,7 +105,7 @@
       if(chkbox.checked) {
          if(contains(arr,x) == -1) {
              document.getElementById('correctedReviews').value = document.getElementById('correctedReviews').value+x+",";
-             alert(document.getElementById('correctedReviews').value);
+            // alert(document.getElementById('correctedReviews').value);
          }
     
       }
@@ -113,10 +115,10 @@
             arr.splice(index, 1);
          }
          document.getElementById('correctedReviews').value = arr.join();
-         alert(document.getElementById('correctedReviews').value);
+         //alert(document.getElementById('correctedReviews').value);
       }
    }
    function sendCorrectionRequest() {
-      alert(document.getElementById('correctedReviews').value);
-   }
+      document.forms['fCorr'].submit();
+   }   
 </script>

@@ -271,5 +271,9 @@ class ReviewsController < ApplicationController
          
          
      end
+  end
+  def confirmCorrections
+     @project = Project.find(params[:project_id])
+     puts "hi"     
   end        
 end
