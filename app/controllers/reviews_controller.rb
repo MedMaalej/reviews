@@ -92,7 +92,7 @@ class ReviewsController < ApplicationController
      url = Repository.where(project_id: proj).pluck("url")
      str = url.join('')
      str =str[0..str.length-6]
-     r.branchName =str+";"+params["branch"]
+     r.branchName =params["branch"]
      r.projectId = proj[0]
      r.save
      
@@ -157,11 +157,11 @@ class ReviewsController < ApplicationController
               proj = params['projectName']
               system "cd "+str + "&& git pull origin master"
               time = Time.new               
-              system "cd "+str + "&& git checkout -b "+ proj +"_review_"+time.day.to_s+"-"+time.month.to_s+"-"+time.year.to_s+"-"+
+              system "cd "+str + "&& git checkout -b " +"code_review_"+proj+"_"+time.day.to_s+"-"+time.month.to_s+"-"+time.year.to_s+"-"+
               time.hour.to_s+"_"+time.min.to_s+"_"+time.sec.to_s
               r = Review.find_by(id: params['reviewId'])
               r.update(status: 'in review')
-              r.update(branchName: str+";"+proj +"_review_"+time.day.to_s+"-"+time.month.to_s+"-"+time.year.to_s+"-"+
+              r.update(branchName: "code_review_"+proj+"_"+time.day.to_s+"-"+time.month.to_s+"-"+time.year.to_s+"-"+
               time.hour.to_s+"_"+time.min.to_s+"_"+time.sec.to_s)
               session[:rId] = r['id']
               redirect_to '/projects/' +@projName+'/repository' 

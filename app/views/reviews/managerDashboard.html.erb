@@ -21,6 +21,7 @@
     <input type="hidden" name="project_id" id="project_id" value=<%= @project  %>> 
     Review :
     <select name="review" id="review" class="form-control">
+         <option> All  </option>
          <% @reviews.each do |rev| %>
             <option> <%= "review "+rev['id'].to_s %> </option>     
          <% end %>

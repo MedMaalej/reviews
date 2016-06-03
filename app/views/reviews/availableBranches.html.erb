@@ -26,8 +26,14 @@
    
    File.open(filePath, "r") do |f|
       f.each_line do |line| %>
-
-         <option> <%= line %> </option>
+         
+         <%  if line[0]= '*' 
+                line = line[2..line.length-1] 
+             end
+         if  ! line.match(/^code_review_/) %>
+            
+            <option> <%= line %> </option>
+         <%end%>
 
 
        <%
