@@ -112,7 +112,7 @@ class ReviewsController < ApplicationController
      end
      #projId = (Project.find_by(name: params['project_id']))['id']
      @incomingRequests = Review.where(reviewerId: User.current.id , status: 'request')
-     @acceptedIncomingRequests = Review.where(reviewerId: User.current.id , status: ['accepted','in review'])
+     @acceptedIncomingRequests = Review.where(reviewerId: User.current.id , status: ['accepted','in review','Issues_Fixed:Pending'])
      
      acc = params['rAccept']
      if acc.eql?  '1' 
@@ -166,7 +166,7 @@ class ReviewsController < ApplicationController
               session[:rId] = r['id']
               redirect_to '/projects/' +@projName+'/repository' 
            end 
-        elsif status.eql? 'in review' 
+        elsif (status.eql? 'in review') || (status.eql? 'Issues_Fixed:Pending')
            branch = params['branch']
            puts branch+".........."
            if url != nil
@@ -274,6 +274,13 @@ class ReviewsController < ApplicationController
   end
   def confirmCorrections
      @project = Project.find(params[:project_id])
-     puts "hi"     
+     corrections = params['correctedReviews']
+     arr = corrections.split(',')
+     arr.each do |item|
+        idRev = item.to_i
+        rev = Review.find_by(id: idRev)
+        rev.update(status: "Issues_Fixed:Pending")
+        puts idRev
+     end
   end        
 end

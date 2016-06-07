@@ -63,9 +63,13 @@ end
    <%= User.where(id: request['userId']).pluck('lastname')[0] %> </td>
    <td> <%= request['branchName']  %></td>
    <td> <%= Project.where(id: request['projectId']).pluck('name') [0]   %> </td>
+    
    <td>
-        
-        <button class="btn btn-info" name="btn-rev" id="btn-rev" onclick="startReview(<%= request['id'] %>,'<%= request['branchName'] %>')">Start review</button>
+        <% if (request['status'].eql? "accepted") || (request['status'].eql? "in review") %>     
+           <button class="btn btn-info" name="btn-rev" id="btn-rev" onclick="startReview(<%= request['id'] %>,'<%= request['branchName'] %>')">Start review</button>
+        <% else %>
+            <button class="btn btn-info" name="btn-rev" id="btn-rev" onclick="startReview(<%= request['id'] %>,'<%= request['branchName'] %>')">View corrections</button>
+        <% end %>
    </td>
    </tr>
 
