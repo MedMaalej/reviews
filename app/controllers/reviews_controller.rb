@@ -173,9 +173,8 @@ class ReviewsController < ApplicationController
               str = url.join('')
               str =str[0..str.length-6]
               puts str
-              proj = params['projectName']
-              br = branch.split(";") 
-              system "cd "+str + "&& git checkout  "+ br[1]
+              proj = params['projectName'] 
+              system "cd "+str + "&& git checkout  "+ branch
               r = Review.find_by(id: params['reviewId'])
               session[:rId] = r['id']
               redirect_to '/projects/' +@projName+'/repository'
