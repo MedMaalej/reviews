@@ -1,5 +1,6 @@
 class ReviewsController < ApplicationController
   unloadable
+  
   def isMember(userId,projectId)
      found = Member.where(user_id: userId,project_id: projectId)
      if found == nil
@@ -9,21 +10,23 @@ class ReviewsController < ApplicationController
   end  
   def index
      @project = Project.find(params[:project_id])
-     tr = Tracker.find_by(name: 'Code review')
-     if tr == nil
-        t  = Tracker.new
-        t.name="Code review"
-        t.is_in_chlog = 1
-        t.position = 4
-        t.is_in_roadmap = 1
-        t.fields_bits = 0
-        t.default_status_id = 1
-        t.save  
-     end  
-     req = params['req'].blank? ? '' : params['req']
-     @projName = params['project_id']
-     proj = Project.where(name: @projName).pluck("id")
-     @reviews = Review.where(userId: User.current.id , projectId: proj)                  
+     @canSendRequests = User.current.allowed_to?( :Send_Review_Requests,Project.find_by(name: params[:project_id]))
+     
+        tr = Tracker.find_by(name: 'Code review')
+        if tr == nil
+           t  = Tracker.new
+           t.name="Code review"
+           t.is_in_chlog = 1
+           t.position = 4
+           t.is_in_roadmap = 1
+           t.fields_bits = 0
+           t.default_status_id = 1
+           t.save  
+        end  
+        req = params['req'].blank? ? '' : params['req']
+        @projName = params['project_id']
+        proj = Project.where(name: @projName).pluck("id")
+        @reviews = Review.where(userId: User.current.id , projectId: proj)                  
   end
   def availableBranches
      
@@ -97,7 +100,7 @@ class ReviewsController < ApplicationController
      r.save
      
   end  
-  def receiveRequests()
+  def receiveRequests
      @project = Project.find(params[:project_id])
      tr = Tracker.find_by(name: 'Code review')
      if tr == nil
