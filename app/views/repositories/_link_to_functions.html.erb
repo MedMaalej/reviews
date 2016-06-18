@@ -1,5 +1,4 @@
 <% if @entry && @entry.kind == 'file' %>
-
 <p>
 <%= link_to_if action_name != 'changes', l(:label_history), {:action => 'changes', :id => @project, :repository_id => @repository.identifier_param, :path => to_path_param(@path), :rev => @rev } %> |
 <% if @repository.supports_cat? %>

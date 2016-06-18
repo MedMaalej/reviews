@@ -27,6 +27,7 @@ class ReviewsController < ApplicationController
         @projName = params['project_id']
         proj = Project.where(name: @projName).pluck("id")
         @reviews = Review.where(userId: User.current.id , projectId: proj)                  
+        render :layout => false
   end
   def availableBranches
      
@@ -63,7 +64,7 @@ class ReviewsController < ApplicationController
            
            
         end
-
+    render :layout => false 
     end
 
     # @projName = params['project_id']
@@ -98,7 +99,7 @@ class ReviewsController < ApplicationController
      r.branchName =params["branch"]
      r.projectId = proj[0]
      r.save
-     
+     redirect_to "/reviews?project_id="+params['projectName']
   end  
   def receiveRequests
      @project = Project.find(params[:project_id])
@@ -139,7 +140,7 @@ class ReviewsController < ApplicationController
         #redirect_to :receiveRequests
      end
 
-     
+     render :layout => false     
   end
   def codeReview()     
      @project = Project.find(params[:project_id])
@@ -184,7 +185,9 @@ class ReviewsController < ApplicationController
            end              
        else
        end
+     
      end
+  #render :layout => false
   end
   def doCommentLine
      @project = Project.find(params[:project_id])
@@ -216,7 +219,7 @@ class ReviewsController < ApplicationController
      patch.issueId = issue.id           
      patch.pFileName = session[:path]
      patch.save     
-     redirect_to :back
+     render :layout => false
   end
   def getReviewByBranchName(branch)
      rev = Review.where(branchName: branch).pluck('id')
@@ -273,6 +276,7 @@ class ReviewsController < ApplicationController
          
          
      end
+  render :layout => false
   end
   def confirmCorrections
      @project = Project.find(params[:project_id])
@@ -284,5 +288,6 @@ class ReviewsController < ApplicationController
         rev.update(status: "Issues_Fixed:Pending")
         puts idRev
      end
+  render :layout => false 
   end        
 end

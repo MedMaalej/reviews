@@ -11,7 +11,7 @@
  <script src="plugin_assets/reviews/bstrp/js/bootstrap.min.js"></script>
     
 <table border="0">
-<form role="form" name="fReviewerSelection" class="center-block" action="requestConfirmed">
+<form role="form" name="fReviewerSelection" class="center-block" action="requestConfirmed#content">
   <tr><td>
   <h4> Select a branch for review </h4> 
   <div class="col-lg-3 text-center" >
@@ -86,5 +86,6 @@
 
 function confirmRequest() {
    document.forms["fReviewerSelection"].submit();
+   alert("Request sent !");
 }
 </script>
