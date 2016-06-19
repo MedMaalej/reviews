@@ -1,5 +1,5 @@
 
-<% base_url = "http://192.168.1.126:3000"%>
+<% base_url = "http://192.168.1.99:3000"%>
 <body onload="initComponents()"> <link href=<%= base_url +"/plugin_assets/reviews/bstrp/css/bootstrap.min.css"%> rel="stylesheet">
  <link rel="stylesheet" href=<%= base_url+ "http://192.168.1.126:3000/plugin_assets/reviews/awesomplete/awesomplete.css" %> />
  <script src=<%= base_url+"/plugin_assets/reviews/awesomplete/awesomplete.js" %> async></script>
@@ -34,7 +34,7 @@
       <% revision = @annotate.revisions[line_num - 1] %>
       <tr  id="L<%= line_num %>" class="bloc-<%= revision.nil? ? 0 : colors[revision.identifier || revision.revision] %>">
         <input type="hidden" value=<%= line_num  %> id="line">
-        <th class="line-num"><a href="#L<%= line_num %>"  onclick="commentLine(<%= line_num %>)"><%= line_num %></a></th>
+        <th class="line-num"><a href="#"   onclick="addLine(<%= line_num %>)" ><%= line_num %></a></th>
         
         <td class="line-code"><pre><%= line.html_safe %></pre></td>
       </tr>
@@ -76,10 +76,37 @@
        document.getElementById("lineNbr").value= x;
     }
     function initComponents() {
-       document.getElementById("lineNumber").disabled = true;
+       //document.getElementById("lineNumber").disabled = true;
     }
     
     function setValidate() {
        document.getElementById("scored").value = 1;
     }
+    
+    function arrayContainsElement(arr,x){
+       for(var i=0;i<arr.length;i++) {
+          if(arr[i] == x) {
+             return true;
+          }
+       }
+       return false;
+    }
+    function addLine(x) {  
+       var content = document.getElementById("lineNumber").value.split(",");
+        
+       if(!arrayContainsElement(content,x)) {
+          if (document.getElementById("lineNumber").value != "") {
+             document.getElementById("lineNumber").value =document.getElementById("lineNumber").value +"," +x;       
+          }
+          else 
+          {
+             document.getElementById("lineNumber").value =document.getElementById("lineNumber").value +x;
+          }
+       }
+       else {
+          alert("Line already selected!");
+       }
+     
+   }
+    
 </script>
