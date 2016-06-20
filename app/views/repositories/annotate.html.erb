@@ -10,7 +10,7 @@
 <div class="contextual">
   <%= render :partial => 'navigation' %>
 </div>
-<form role="form" name="validateReview" action=<%= base_url +"/doCommentLine"%>>
+<form role="form" name="validateReview" action="">
    <input type="hidden" id="project_id" name="project_id" value=<%= @project %>>
  <b> Score</b>  <input type="number" name="score" id="score" min="0" max="5">
    <button class="btn btn-info" type="submit" onclick="setValidate()" >Send score</button>
@@ -75,7 +75,7 @@
     %>
     </select>
    <br> <br>
-   <button class="btn btn-info" id="btn-comment" type="submit" onclick="checkLines()"  >Save</button>
+   <button class="btn btn-info" id="btn-comment" type="button"  onclick="checkLines()"  >Save</button>
    
   </div>
  <input class="form-control" type="hidden" name="lineNbr" id="lineNbr">
@@ -125,12 +125,11 @@
          var secondArr = content[i+1].split(",");
          if(parseInt(firstArr[firstArr.length-1]) > parseInt(secondArr[0])) {
              alert("Bad line range ! Please respect that pattern: minLine-maxLine");
+             return;
          } 
-         else
-         { 
-             document.forms["fComment"].submit();
-         }
+         
       }
+      document.forms["fComment"].submit();
    }
     
 </script>
