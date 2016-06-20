@@ -1,4 +1,4 @@
-<% base_url = "http://192.168.1.99:3000"%>
+<% base_url = "http://192.168.1.126:3000"%>
 
 <body>
 <link href=<%= base_url + "/plugin_assets/reviews/bstrp/css/bootstrap.min.css" %> rel="stylesheet">
@@ -13,10 +13,16 @@
   </ul>
   <div id="my-tab-content" class="tab-content" height="100%">
         <div class="tab-pane active" id="tab1">
-            <iframe src= <%= "/reviews?project_id=trackertest" %>  width="100%" height="600px"></iframe>        
+            <% proj = request.original_url
+                puts proj
+                arr = proj.split("/")
+                pName = arr[4]
+                #puts pName
+            %>   
+            <iframe src= <%= "/reviews?project_id="+pName  %>  width="100%" height="600px"></iframe>        
         </div>
         <div class="tab-pane" id="tab2">
-            <iframe src= <%= "/receiveRequests?project_id=trackertest" %>  width="100%" height="600px"></iframe>
+            <iframe src= <%= "/receiveRequests?project_id="+pName %>  width="100%" height="600px"></iframe>
         </div>
   </div>
 </body>
