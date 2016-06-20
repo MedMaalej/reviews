@@ -62,8 +62,21 @@
       <option> Bad design </option>
       <option> Line is too long  </option>
    </select>
+   <br>
+   Assignee :
+   <select name="assignee" class="form-control" id="assignee">
+   <% users = User.all
+      users.each do |user|
+         if !user.lastname.eql? "Anonymous"
+   %>
+      <option> <%= user.firstname %> &nbsp <%= user.lastname %></option>
+   <%
+      end
+      end
+    %>
+    </select>
    <br> <br>
-   <button class="btn btn-info" id="btn-comment" type="submit" >Save</button>
+   <button class="btn btn-info" id="btn-comment" type="button" onclick="checkLines()"  >Save</button>
    
   </div>
  <input class="form-control" type="hidden" name="lineNbr" id="lineNbr">
@@ -107,6 +120,20 @@
           alert("Line already selected!");
        }
      
+   }
+   function checkLines() {
+      var content = document.getElementById("lineNumber").value.split("-");
+      for(var i=0;i<content.length-1;i++) {
+         var firstArr = content[i].split(",");
+         var secondArr = content[i+1].split(",");
+         if(parseInt(firstArr[firstArr.length-1]) > parseInt(secondArr[0])) {
+             alert("Bad line range ! Please respect that pattern: minLine-maxLine");
+         } 
+         else
+         { 
+             document.forms["fComment"].submit();
+         }
+      }
    }
     
 </script>
