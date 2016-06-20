@@ -1,3 +1,4 @@
+<body align="center">
 <link href="plugin_assets/reviews/bstrp/css/bootstrap.min.css" rel="stylesheet">
  <link rel="stylesheet" href="plugin_assets/reviews/awesomplete/awesomplete.css" />
  <script src="plugin_assets/reviews/awesomplete/awesomplete.js" async></script>
@@ -8,6 +9,7 @@
 <!-- Load d3.js and c3.js -->
 <script src="plugin_assets/reviews/c3/d3.v3.min.js" charset="utf-8"></script>
 <script src="plugin_assets/reviews/c3/c3.min.js"></script>
+<br><br><br>
 <form role="form" name="fShowStats" class="form-inline" action="managerDashboard#content">
     Developer:
     <select name="developer" id="developer" class="form-control">
@@ -29,8 +31,8 @@
     <br><br>
     <button class="btn btn-info" type="submit" onclick="showStatsForName()"> Show statistics </button>
 </form>
-<div class="pull-left"  id="chart"></div>
-
+<div id="chart"></div>
+</body>
 <script type="text/javascript">
 var x = parseInt(<%= @a %>);
 

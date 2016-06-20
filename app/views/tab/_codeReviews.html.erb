@@ -10,6 +10,7 @@
   <ul class="nav nav-tabs" data-tabs="tabs">
     <li><a class="active" href="#tab1" data-toggle="tab">Code reviews requests</a></li>
      <li><a  href="#tab2" data-toggle="tab" >Incoming review requests</a></li>
+     <li><a  href="#tab3" data-toggle="tab">Show statistics</a></li>
   </ul>
   <div id="my-tab-content" class="tab-content" height="100%">
         <div class="tab-pane active" id="tab1">
@@ -24,6 +25,10 @@
         <div class="tab-pane" id="tab2">
             <iframe src= <%= "/receiveRequests?project_id="+pName %>  width="100%" height="600px"></iframe>
         </div>
+        <div class="tab-pane" id="tab3">
+            <iframe src= <%= "/managerDashboard?project_id="+pName %>  width="100%" height="600px"></iframe>
+        </div>
+ 
   </div>
 </body>
 <script type="text/javascript">
