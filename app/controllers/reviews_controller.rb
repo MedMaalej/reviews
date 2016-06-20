@@ -116,7 +116,7 @@ class ReviewsController < ApplicationController
      end
      #projId = (Project.find_by(name: params['project_id']))['id']
      @incomingRequests = Review.where(reviewerId: User.current.id , status: 'request')
-     @acceptedIncomingRequests = Review.where(reviewerId: User.current.id , status: ['accepted','in review','Issues_Fixed:Pending'])
+     @acceptedIncomingRequests = Review.where(reviewerId: User.current.id , status: ['accepted','in review','Issues_Fixed:Pending','rejected'])
      
      acc = params['rAccept']
      if acc.eql?  '1' 
@@ -129,6 +129,7 @@ class ReviewsController < ApplicationController
      if rej.eql?  '1'
         r = Review.find_by(id: params['currentReview'])
         r.update(status: 'rejected')
+        r.update(status: params['reason'])
         @rejected = 1
         #redirect_to :receiveRequests
      end

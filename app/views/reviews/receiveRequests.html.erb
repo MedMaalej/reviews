@@ -81,6 +81,7 @@ end
 <input type="hidden" value=<%= @project %> id="projectName" name="projectName">
 <input type="hidden" value=0 id="rStart" name="rStart">
 <input type="hidden" value=<%= @project %> id="project_id" name="project_id">
+<input type="hidden" id="reason" name="reason">
 </form>
 </table>
 <br> 
@@ -100,6 +101,8 @@ end
    function rejectReview(x) {
       document.getElementById("rReject").value = 1;
       document.getElementById("currentReview").value = x;
+      var reas = prompt("Reason","");
+      document.getElementById("reason").value = reas;
    }   
   function postponeReview(x) {
       document.getElementById("rPostpone").value = 1;
