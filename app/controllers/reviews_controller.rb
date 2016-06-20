@@ -129,7 +129,7 @@ class ReviewsController < ApplicationController
      if rej.eql?  '1'
         r = Review.find_by(id: params['currentReview'])
         r.update(status: 'rejected')
-        r.update(status: params['reason'])
+        r.update(comment: params['reason'])
         @rejected = 1
         #redirect_to :receiveRequests
      end
