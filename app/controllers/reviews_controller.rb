@@ -210,8 +210,12 @@ class ReviewsController < ApplicationController
      patch.ptime = Time.now.to_s
      patch.reviewId = session[:rId]
      projId = (Project.find_by(name: params[:project_id]))['id']
-     developerId = (Review.find_by(id: session[:rId]))['userId']
-     sql = "Select id from trackers where name='Code review';"
+     devName = params['assignee'].split(" ")
+     fn = devName[0]
+     ln = devName[1]
+     
+     developerId = User.where(firstname: fn, lastname: ln).pluck("id")
+     #sql = "Select id from trackers where name='Code review';"
      #track = ActiveRecord::Base.connection.execute(sql)
      tr =(Tracker.find_by(name: 'Code review'))['id']
      issue = Issue.new(:project_id => projId, :tracker_id => tr, :author_id => User.current.id, :subject => 'code_review_'+session[:rId].to_s, :assigned_to_id => developerId, :description => (patch.pLine).to_s+':'+patch.pComment)
@@ -219,7 +223,8 @@ class ReviewsController < ApplicationController
      patch.issueId = issue.id           
      patch.pFileName = session[:path]
      patch.save     
-     render :layout => false
+     #render :layout => false
+     redirect_to :back
   end
   def getReviewByBranchName(branch)
      rev = Review.where(branchName: branch).pluck('id')

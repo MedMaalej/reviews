@@ -9,7 +9,7 @@ class CreatePatches < ActiveRecord::Migration
 
       t.text :pComment
      
-      t.integer :pLine
+      t.string :pLine
       
       t.integer :pErrorId
        
