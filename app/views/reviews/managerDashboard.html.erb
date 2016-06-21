@@ -1,4 +1,11 @@
 <body align="center">
+<style>
+   #counter {
+      float: left;
+      margin-left: 30px;
+      margin-top: 0px;
+   }   
+</style>
 <link href="plugin_assets/reviews/bstrp/css/bootstrap.min.css" rel="stylesheet">
  <link rel="stylesheet" href="plugin_assets/reviews/awesomplete/awesomplete.css" />
  <script src="plugin_assets/reviews/awesomplete/awesomplete.js" async></script>
@@ -31,7 +38,12 @@
     <br><br>
     <button class="btn btn-info" type="submit" onclick="showStatsForName()"> Show statistics </button>
 </form>
-<div id="chart"></div>
+   <div id="chart"></div>
+   <div id="chart2"></div>
+<br />
+<br />
+
+
 </body>
 <script type="text/javascript">
 var x = parseInt(<%= @a %>);
@@ -40,11 +52,12 @@ var y =  parseInt(<%= @b %>);
 
 var z = parseInt(<%= @c %>);
 var t = parseInt(<%= @d %>);
-
-
+var v = parseInt(<%= @j  %>);
+var w = parseInt(<%= @k  %>);
+var u = parseInt(<%= @l  %>);
 var chart = c3.generate({
     data: {
-        // iris data from R
+        
       
         
           columns: [
@@ -63,8 +76,27 @@ var chart = c3.generate({
     
  
 });
- 
+var chart2 = c3.generate({
+    bindto: '#chart2',
+    data: {
+      columns: [
+        ['Errors for the last 3  reviews', v, w, u]
+      ],
+      axes: {
+        data2: 'y2'
+      }
+    },
+    axis: {
+      y: {
+        label: { // ADD
+          text: 'Number of errors',
+          position: 'outer-middle'
+        }
+      }
+    }
+});
 function showStatsForName() {
    document.getElementById("nameChanged").value=1;
 }
+
 </script>

@@ -1,4 +1,4 @@
-<% base_url = "http://192.168.1.126:3000"%>
+<% base_url = "http://192.168.1.99:3000" %>
 
 <body>
 <link href=<%= base_url + "/plugin_assets/reviews/bstrp/css/bootstrap.min.css" %> rel="stylesheet">
@@ -7,7 +7,7 @@
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
  <!-- Include all compiled plugins (below), or include individual files as needed -->
  <script src=<%=base_url+ "/plugin_assets/reviews/bstrp/js/bootstrap.min.js"%>></script>
-  <ul class="nav nav-tabs" data-tabs="tabs">
+  <ul class="nav nav-tabs" id="tabs" data-tabs="tabs">
     <li><a class="active" href="#tab1" data-toggle="tab">Code reviews requests</a></li>
      <li><a  href="#tab2" data-toggle="tab" >Incoming review requests</a></li>
      <li><a  href="#tab3" data-toggle="tab">Show statistics</a></li>
@@ -33,7 +33,7 @@
 </body>
 <script type="text/javascript">
     jQuery(document).ready(function ($) {
-        $('#tabs').tab();
+          $('#tabs').tab();
     });
     
 </script> 

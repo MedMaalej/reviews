@@ -279,7 +279,21 @@ class ReviewsController < ApplicationController
             end
             i = i +1   
          end
-         
+         sql = "select r.id,count(*)  from users u,reviews r,patches p,errors e  where  (u.id = r.userId and r.id = p.reviewId and e.id = p.pErrorId and u.id="+uid.to_s+") group by r.id"
+         res= ActiveRecord::Base.connection.execute(sql)
+         i=0
+         res.each do |r|
+            puts r[0].to_s+"=>"+r[1].to_s
+            if i == 0 
+               @j = r[1].to_s
+            elsif i==1
+               @k = r[1].to_s 
+            elsif i==2
+               @l = r[1].to_s
+            else
+            end
+            i = i + 1
+         end            
          
      end
   render :layout => false
