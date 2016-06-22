@@ -13,9 +13,9 @@
 <table border="0">
 <form role="form" name="fReviewerSelection" class="center-block" action="requestConfirmed#content">
   <tr><td>
-  <h4> Select a branch for review </h4> 
-  <div class="col-lg-3 text-center" >
+  <h5> &nbsp  Select a branch for review &nbsp</h5>
   </td>
+  <div class="col-lg-3 text-center" >
   <td>
   <input type="hidden" name="project_id" id="project_id" value=<%= @project %>>
   <select name="branch" id="branch" class="form-control">
@@ -44,15 +44,17 @@
  %>
 
 </select>
-</td>
 
+</td>
+<br>
 </div>
 </tr>
 <tr>
 <td>
-<div class="col-lg-3">
-<h4> Select a reviewer  </h4><br>
+
+<h5> &nbsp Select a reviewer  </h5> 
 </td>
+<div class="col-lg-3">
 <td>
 
 <select name="reviewer" id="reviewer" class="form-control" >
@@ -71,9 +73,11 @@
 </div>
 </td>
 </tr>
-<br> <br>
+<tr></tr>
+<tr></tr>
+<br> <br><br>
 <tr><td colspan="2">
-<input type="hidden" name="projectName" id="projectName" value=<%= @projName %> >
+<input type="hidden" name="projectName" id="projectName" value=<%= @projName %> > <br><br>&nbsp &nbsp &nbsp
 <button type="button" class="btn btn-info" onclick="confirmRequest()"> Confirm your review request </button>
 </td><td></td></tr>
 </form>

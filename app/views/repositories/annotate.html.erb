@@ -10,7 +10,7 @@
 <div class="contextual">
   <%= render :partial => 'navigation' %>
 </div>
-<form role="form" name="validateReview" action="">
+<form role="form" name="validateReview" action=<%= base_url +"/doCommentLine"%>>
    <input type="hidden" id="project_id" name="project_id" value=<%= @project %>>
  <b> Score</b>  <input type="number" name="score" id="score" min="0" max="5">
    <button class="btn btn-info" type="submit" onclick="setValidate()" >Send score</button>
@@ -68,7 +68,7 @@
       users.each do |user|
          if !user.lastname.eql? "Anonymous"
    %>
-      <option> <%= user.firstname %><%= user.lastname %></option>
+      <option value=<%= user.id %>> <%= user.firstname %><%= user.lastname %></option>
    <%
       end
       end

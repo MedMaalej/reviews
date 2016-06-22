@@ -68,9 +68,12 @@ end
    <td>
         <% if (request['status'].eql? "accepted") || (request['status'].eql? "in review") %>     
            <button class="btn btn-info" name="btn-rev" id="btn-rev" onclick="startReview(<%= request['id'] %>,'<%= request['branchName'] %>')">Start review</button>
-        <% else %>
+        <% elsif request['status'].eql? "Issues_Fixed:Pending" %>
             <button class="btn btn-info" name="btn-rev" id="btn-rev" onclick="startReview(<%= request['id'] %>,'<%= request['branchName'] %>')">View corrections</button>
-        <% end %>
+          
+        <% else 
+         end %>
+        
    </td>
    </tr>
 

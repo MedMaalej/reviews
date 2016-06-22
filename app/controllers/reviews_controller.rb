@@ -116,7 +116,7 @@ class ReviewsController < ApplicationController
      end
      #projId = (Project.find_by(name: params['project_id']))['id']
      @incomingRequests = Review.where(reviewerId: User.current.id , status: 'request')
-     @acceptedIncomingRequests = Review.where(reviewerId: User.current.id , status: ['accepted','in review','Issues_Fixed:Pending','rejected'])
+     @acceptedIncomingRequests = Review.where(reviewerId: User.current.id , status: ['accepted','in review','Issues_Fixed:Pending'])
      
      acc = params['rAccept']
      if acc.eql?  '1' 
@@ -193,7 +193,7 @@ class ReviewsController < ApplicationController
   def doCommentLine
      @project = Project.find(params[:project_id])
      if(params['scored'].eql? '1')
-        
+        puts "found"
         review = Review.find_by(id: session[:rId])
         review.update(score: params['score'].to_i)
         session[:lastScore] = params['score'].to_i
@@ -211,17 +211,17 @@ class ReviewsController < ApplicationController
      patch.ptime = Time.now.to_s
      patch.reviewId = session[:rId]
      projId = (Project.find_by(name: params[:project_id]))['id']
-     devName = params['assignee'].split(" ")
-     fn = devName[0]
-     ln = devName[1]
      
-     developerId = User.where(firstname: fn, lastname: ln).pluck("id")
+     
+     developerId = params["assignee"].to_i
+     puts developerId.to_s
      #sql = "Select id from trackers where name='Code review';"
      #track = ActiveRecord::Base.connection.execute(sql)
      tr =(Tracker.find_by(name: 'Code review'))['id']
      issue = Issue.new(:project_id => projId, :tracker_id => tr, :author_id => User.current.id, :subject => 'code_review_'+session[:rId].to_s, :assigned_to_id => developerId, :description => (patch.pLine).to_s+':'+patch.pComment+';on FILE:'+session[:path])
      issue.save
      patch.issueId = issue.id           
+     puts issue.id    
      patch.pFileName = session[:path]
      patch.save     
      #render :layout => false
