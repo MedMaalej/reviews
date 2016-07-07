@@ -8,16 +8,20 @@
 <br>
 <h3> Incoming review requests </h3> <b><span class="label label-default"><%= @incomingRequests.size %> pending  requests</span></b> <br> <br>
 <table class="table">
+<th> Review </th>
+<th> Date </th>
 <th> Developer  </th>
 <th> Branch </th>
 <th> Project</th>
-<th> Accept/Reject review request </th>
+<th> Accept/Reject/Postpone review request </th>
 <form role="form" name="fAcceptRefuseReq" action="receiveRequests#content">
 <%
 i = 0
 @incomingRequests.each do |request|
 %>
    <tr>
+   <td><%= "Review "+ request['id'].to_s %> </td>
+   <td><%= request['dater'] %> </td> 
    <td> <%= User.where(id: request['userId']).pluck('firstname')[0] %> &nbsp
    <%= User.where(id: request['userId']).pluck('lastname')[0] %> </td>
    <td> <%= request['branchName']  %></td>
