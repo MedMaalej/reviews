@@ -1,3 +1,3 @@
 = reviews
 
-Description goes here
+Reviews is a module for code reviews management. It offers line by line review, score attribution and some statistics to help managers discover developers performance and the type of errors they made. The module offers some graphs (pies, ...) to illustrate  developers common errors.
